@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'configStore';
 import { getMovieShowing } from 'Slices/movie';
+import { randomizeHighlightMovie } from 'Slices/movie';
 
 const MovieShowing = () => {
 	const { movies, isLoading, error } = useSelector(

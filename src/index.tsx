@@ -2,12 +2,13 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
+import './index.css';
+
 import { MantineProvider, Button, MantineThemeOverride } from '@mantine/core';
 
 //setup redux
 import store from './configStore';
 // import Demo from "./_Playground/StyledComponents/Demo";
-import './index.css';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -36,7 +37,12 @@ const myTheme: MantineThemeOverride = {
 
 root.render(
 	<Provider store={store}>
-		<MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
+		<MantineProvider
+			theme={myTheme}
+			withGlobalStyles
+			withNormalizeCSS
+			emotionOptions={{ key: 'mantine', prepend: false }}
+		>
 			<App />
 		</MantineProvider>
 	</Provider>

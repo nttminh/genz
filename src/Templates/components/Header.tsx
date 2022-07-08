@@ -1,8 +1,6 @@
-import { Navbar } from '@mantine/core';
-import React, { MouseEventHandler, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as BrandLogo } from '../../logo2.svg';
 
 type Props = {
 	horizontal?: boolean;
@@ -10,7 +8,6 @@ type Props = {
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	console.log(isOpen);
 
 	const handleToggleOpen = () => {
 		setIsOpen((prev) => !prev);
@@ -146,7 +143,7 @@ const Header = () => {
 								onClick={handleToggleOpen}
 							>
 								<svg
-									className="h-6 w-6 text-gray-400 cursor-pointer hover:text-green-500 "
+									className="h-6 w-6 text-gray-400 cursor-pointer hover:text-red-600 "
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -231,10 +228,7 @@ const Header = () => {
 						</div>
 						<div className="mt-auto">
 							<div className="pt-6">
-								<button
-									className="w-full py-3 px-4 bg-white hover:bg-green-600 text-sm text-center text-gray-800 hover:text-white font-bold border-2 border-gray-800 hover:border-green-600 hover:shadow-md
-    transform active:scale-75 transition-transform focus:border-4 focus:border-green-300 duration-700 focus:outline-none"
-								>
+								<button className="w-full py-3 px-4 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold  hover:shadow-md transform transition-transform duration-700 focus:outline-none">
 									Log In
 								</button>
 							</div>
