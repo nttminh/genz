@@ -7,8 +7,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Scrollbar } from 'swiper';
+import { useNavigate } from 'react-router-dom';
 
 const MovieShowing = () => {
+	const navigate = useNavigate();
 	const { movies, isLoading, error } = useSelector(
 		(state: RootState) => state.movie
 	);
@@ -27,6 +29,10 @@ const MovieShowing = () => {
 		// TODO: Error component
 		return <h1>{error}</h1>;
 	}
+
+	const handleOnMovieClick = (movieId: number) => {
+		navigate(`/${movieId}`);
+	};
 
 	return (
 		<div>
@@ -63,12 +69,17 @@ const MovieShowing = () => {
 						spaceBetween: 10,
 					},
 				}}
-				onSlideChange={() => console.log('slide change')}
-				onSwiper={(swiper) => console.log(swiper)}
+				// onSlideChange={() => console.log('slide change')}
+				// onSwiper={(swiper) => console.log(swiper)}
 			>
 				{movies.map((movie: Movie) => (
 					<SwiperSlide key={movie.maPhim}>
-						<div className="w-full h-56 group cursor-pointer ">
+						<div
+							className="w-full h-56 group cursor-pointer"
+							onClick={() => {
+								handleOnMovieClick(movie.maPhim);
+							}}
+						>
 							<img
 								className="h-full object-cover object-center rounded-md transition duration-300 group-hover:scale-75"
 								src={movie.hinhAnh}
