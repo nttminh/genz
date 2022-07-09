@@ -9,7 +9,11 @@ import 'swiper/css/scrollbar';
 import { Scrollbar } from 'swiper';
 import { useNavigate } from 'react-router-dom';
 
-const MovieShowing = () => {
+interface Props {
+	initialSlide?: number;
+}
+
+const MovieShowing = ({ initialSlide = 1 }: Props) => {
 	const navigate = useNavigate();
 	const { movies, isLoading, error } = useSelector(
 		(state: RootState) => state.movie
@@ -49,7 +53,7 @@ const MovieShowing = () => {
 				centeredSlides
 				loop
 				spaceBetween={10}
-				initialSlide={3} // will be removed when last photo from db is updated
+				initialSlide={initialSlide} // will be removed when last photo from db is updated
 				slidesPerView={3.3}
 				scrollbar={{ enabled: true, draggable: true }}
 				breakpoints={{
