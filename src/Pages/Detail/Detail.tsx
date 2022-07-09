@@ -1,9 +1,11 @@
 import { Button } from '@mantine/core';
-import { Movie } from 'Interface/Movie';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import movieAPI from 'Services/movieAPI';
 import { Plus } from 'tabler-icons-react';
+import ReactPlayer from 'react-player/youtube';
+
+import { Movie } from 'Interface/Movie';
+import movieAPI from 'Services/movieAPI';
 
 type Props = {};
 
@@ -24,8 +26,32 @@ const Detail = (props: Props) => {
 
 	return (
 		<>
-			<div className="h-72 bg-neutral-900 flex justify-center items-center">
-				<h4>Trailer will be updated</h4>
+			<div className="h-44 flex justify-center items-center">
+				{!movie && <h4>Trailer will be updated</h4>}
+
+				{movie && (
+					<div className="wrapper w-screen">
+						<ReactPlayer
+							// url={`https://www.youtube-nocookie.com/embed/${
+							// 	playerVideo?.trailer?.id || ''
+							// }`}
+							url={movie ? movie.trailer : ''}
+							width="100%"
+							height="100%"
+							playing
+							muted
+							// controls
+							config={{
+								playerVars: {
+									rel: 0,
+									modestbranding: 1,
+									playsinline: 1,
+									iv_load_policy: 3,
+								},
+							}}
+						/>
+					</div>
+				)}
 			</div>
 			<div className="px-4">
 				<h1>{movie?.tenPhim}</h1>
