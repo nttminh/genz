@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import ReactPlayer from 'react-player/youtube';
 
-import { Movie } from '../../Interface/Movie';
+import Movie from 'Interface/Movie';
 import movieAPI from 'Services/movieAPI';
 
 type Props = {};
@@ -22,7 +22,7 @@ const Detail = (props: Props) => {
 			// ...
 		}
 		fetchData();
-	}, []);
+	}, [id]);
 
 	return (
 		<>

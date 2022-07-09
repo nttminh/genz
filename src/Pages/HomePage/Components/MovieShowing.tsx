@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'configStore';
 import { getMovieShowing } from 'Slices/movie';
-import { Movie } from 'Interface/Movie';
+import Movie from 'Interface/Movie';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
