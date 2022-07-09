@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InfoCircle, Share, Plus } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
 
-import movieReducers, { randomizeHighlightMovie } from '../../Slices/movie';
+import movieReducers, { randomizeHighlightMovie } from '../../../Slices/movie';
 
 type Props = {};
 

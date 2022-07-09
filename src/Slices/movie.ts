@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Movie } from '../Interface/movie';
+import { Movie } from '../Interface/Movie';
 import movieAPI from '../Services/movieAPI';
 
 interface State {

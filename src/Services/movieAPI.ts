@@ -1,4 +1,4 @@
-import { Movie } from "../Interface/movie";
+import { Movie } from "../Interface/Movie";
 import axiosClient from "./axiosClient";
 
 const movieAPI = {
