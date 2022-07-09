@@ -8,6 +8,7 @@ import Register from './Pages/Register/Register';
 import About from './Pages/About/About';
 import Checkout from './Pages/Checkout/Checkout';
 import ProtectedRoute from 'Routes/ProtectedRoute';
+import Detail from 'Pages/Detail/Detail';
 
 function App(): React.ReactElement {
 	return (
@@ -18,6 +19,7 @@ function App(): React.ReactElement {
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
 					<Route path="about" element={<About />} />
+					<Route path="/:id" element={<Detail />} />
 					<Route
 						path="checkout"
 						element={
