@@ -26,11 +26,11 @@ const Detail = (props: Props) => {
 
 	return (
 		<>
-			<div className="h-44 flex justify-center items-center">
+			<div className="h-44 md:h-72 lg:h-128 flex justify-center items-center">
 				{!movie && <h4>Trailer will be updated</h4>}
 
 				{movie && (
-					<div className="wrapper w-screen">
+					<div className="wrapper w-screen h-full">
 						<ReactPlayer
 							// url={`https://www.youtube-nocookie.com/embed/${
 							// 	playerVideo?.trailer?.id || ''
@@ -58,7 +58,7 @@ const Detail = (props: Props) => {
 				<p>Ngày khởi chiếu: {movie?.ngayKhoiChieu}</p>
 				<p>Mô tả: {movie?.moTa}</p>
 			</div>
-			<div className="text-center">
+			<div className="text-center mt-8">
 				<Button radius="sm" color="red" leftIcon={<Plus />}>
 					Đặt vé
 				</Button>
