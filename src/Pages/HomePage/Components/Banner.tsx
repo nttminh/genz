@@ -1,11 +1,12 @@
 import { ActionIcon, Button } from '@mantine/core';
 import { AppDispatch, RootState } from 'configStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { InfoCircle, Share, Plus } from 'tabler-icons-react';
+import { InfoCircle, Share, Plus, ClipboardCheck } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
 
 import movieReducers, { randomizeHighlightMovie } from '../../../Slices/movie';
+import ReactTooltip from 'react-tooltip';
 
 type Props = {};
 
@@ -14,10 +15,39 @@ const Banner = (props: Props) => {
 		(state: RootState) => state.movie
 	);
 	const dispatch = useDispatch<AppDispatch>();
+	const [isCopied, setIsCopied] = useState<boolean>(false);
 
 	useEffect(() => {
 		dispatch(randomizeHighlightMovie());
 	}, [movies]);
+
+	async function copyTextToClipboard() {
+		setIsCopied(true);
+
+		if ('clipboard' in navigator) {
+			return await navigator.clipboard.writeText(
+				`https://genz-nttminh.vercel.app/${highlightMovie?.maPhim}`
+			);
+		} else {
+			return document.execCommand(
+				'copy',
+				true,
+				`https://genz-nttminh.vercel.app/${highlightMovie?.maPhim}`
+			);
+		}
+	}
+
+	const handleCopyClick = () => {
+		// Asynchronously call copyTextToClipboard
+		copyTextToClipboard()
+			.then(() => {
+				// If successful, update the isCopied state value
+				setIsCopied(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	if (!highlightMovie) {
 		return <h1>Loading banner...</h1>;
@@ -41,11 +71,8 @@ const Banner = (props: Props) => {
 					{highlightMovie.tenPhim}
 				</h1>
 				<div className="actions w-1/2 lg:w-1/5 flex justify-between items-center mx-auto">
-					<ActionIcon
-						component={Link}
-						to={`/${highlightMovie.maPhim}`}
-					>
-						<Share />
+					<ActionIcon data-tip="Đã sao chép link" data-event="click">
+						{isCopied ? <ClipboardCheck /> : <Share />}
 					</ActionIcon>
 					<Button radius="sm" color="red" leftIcon={<Plus />}>
 						Đặt vé
@@ -58,6 +85,12 @@ const Banner = (props: Props) => {
 					</ActionIcon>
 				</div>
 			</div>
+			<ReactTooltip
+				place="top"
+				effect="solid"
+				globalEventOff="click"
+				afterShow={handleCopyClick}
+			/>
 		</div>
 	);
 };
