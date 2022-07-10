@@ -2,7 +2,7 @@
 
 GenZ is a Vietnamese website that provides information about movies and also help you to book your movie tickets.
 
-The official website is: Will be updated soon
+The official website is: [GenZ-nttminh.vercel.app](https://genz-nttminh.vercel.app/)
 
 ## Table of contents
 
