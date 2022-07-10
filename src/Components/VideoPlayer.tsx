@@ -16,6 +16,14 @@ const VideoPlayer = ({
 	setIsTrailerDone = defaultFunction,
 	...rest
 }: Props) => {
+	if (movie.trailer === '') {
+		return (
+			<div className="absolute inset-0 w-full h-full flex justify-center items-center">
+				<h2>Phim này không có trailer</h2>
+			</div>
+		);
+	}
+
 	return (
 		<ReactPlayer
 			// url={`https://www.youtube-nocookie.com/embed/${
