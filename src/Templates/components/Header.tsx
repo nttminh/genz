@@ -16,7 +16,7 @@ const Header = () => {
 	return (
 		<>
 			<div>
-				<nav className="relative px-4 py-4 flex lg:justify-between items-center bg-gradient-to-b from-black to-transparent">
+				<nav className="relative px-4 py-4 flex lg:justify-between items-center bg-gradient-to-b from-black to-transparent z-50">
 					<div className="lg:hidden">
 						<button
 							className="navbar-burger flex items-center p-3 focus:outline-none hover:text-red-700 focus:text-gray-50"

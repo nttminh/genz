@@ -6,6 +6,7 @@ import ReactPlayer from 'react-player/youtube';
 
 import Movie from 'Interface/movie';
 import movieAPI from 'Services/movieAPI';
+import VideoPlayer from 'Components/VideoPlayer';
 
 type Props = {};
 
@@ -31,25 +32,7 @@ const Detail = (props: Props) => {
 
 				{movie && (
 					<div className="wrapper w-screen h-full">
-						<ReactPlayer
-							// url={`https://www.youtube-nocookie.com/embed/${
-							// 	playerVideo?.trailer?.id || ''
-							// }`}
-							url={movie ? movie.trailer : ''}
-							width="100%"
-							height="100%"
-							playing
-							muted
-							// controls
-							config={{
-								playerVars: {
-									rel: 0,
-									modestbranding: 1,
-									playsinline: 1,
-									iv_load_policy: 3,
-								},
-							}}
-						/>
+						<VideoPlayer movie={movie} />
 					</div>
 				)}
 			</div>
