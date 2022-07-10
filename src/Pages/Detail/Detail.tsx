@@ -32,7 +32,7 @@ const Detail = (props: Props) => {
 				{!movie && <h4>Trailer will be updated</h4>}
 
 				{movie && (
-					<div className="wrapper w-screen h-full pointer-events-none">
+					<div className="wrapper w-screen h-full">
 						<VideoPlayer movie={movie} />
 					</div>
 				)}
