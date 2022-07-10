@@ -85,7 +85,7 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 							}}
 						>
 							<img
-								className="h-full object-cover object-center rounded-md transition duration-300 group-hover:scale-75"
+								className="h-full mx-auto object-cover object-center rounded-md transition duration-300 group-hover:scale-75"
 								src={movie.hinhAnh}
 								alt={movie.tenPhim}
 							/>
