@@ -8,12 +8,14 @@ import Movie from 'Interface/movie';
 import movieAPI from 'Services/movieAPI';
 import VideoPlayer from 'Components/VideoPlayer';
 import CloseButton from './Components/CloseButton';
+import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
 
 type Props = {};
 
 const Detail = (props: Props) => {
 	const { id } = useParams();
 	const [movie, setMovie] = useState<Movie>();
+	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -28,12 +30,28 @@ const Detail = (props: Props) => {
 
 	return (
 		<>
-			<div className="relative h-44 md:h-72 lg:h-128 flex justify-center items-center">
+			<div
+				className="relative h-44 md:h-72 lg:h-128 flex justify-center items-center"
+				style={{
+					backgroundSize: 'auto, cover',
+					background: `
+					linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,100)),
+					url(${
+						movie?.hinhAnh && getYoutubeThumbnail(movie.trailer)
+					}) center/contain no-repeat
+					`,
+				}}
+			>
 				{!movie && <h4>Trailer will be updated</h4>}
 
 				{movie && (
 					<div className="wrapper w-screen h-full">
-						<VideoPlayer movie={movie} />
+						{!isTrailerDone && (
+							<VideoPlayer
+								movie={movie}
+								setIsTrailerDone={setIsTrailerDone}
+							/>
+						)}
 					</div>
 				)}
 

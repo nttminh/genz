@@ -130,7 +130,7 @@ const Banner = (props: Props) => {
 				<h1 className="text-center font-extrabold mb-4">
 					{highlightMovie.tenPhim}
 				</h1>
-				<div className="actions w-1/2 lg:w-1/5 flex justify-between items-center mx-auto">
+				<div className="actions w-3/5 lg:w-1/5 flex justify-between items-center mx-auto">
 					<ActionIcon data-tip="Đã sao chép link" data-event="click">
 						{isCopied ? <ClipboardCheck /> : <Share />}
 					</ActionIcon>
