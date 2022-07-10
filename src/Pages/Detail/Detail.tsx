@@ -7,6 +7,7 @@ import ReactPlayer from 'react-player/youtube';
 import Movie from 'Interface/movie';
 import movieAPI from 'Services/movieAPI';
 import VideoPlayer from 'Components/VideoPlayer';
+import CloseButton from './Components/CloseButton';
 
 type Props = {};
 
@@ -27,14 +28,18 @@ const Detail = (props: Props) => {
 
 	return (
 		<>
-			<div className="h-44 md:h-72 lg:h-128 flex justify-center items-center">
+			<div className="relative h-44 md:h-72 lg:h-128 flex justify-center items-center">
 				{!movie && <h4>Trailer will be updated</h4>}
 
 				{movie && (
-					<div className="wrapper w-screen h-full">
+					<div className="wrapper w-screen h-full pointer-events-none">
 						<VideoPlayer movie={movie} />
 					</div>
 				)}
+
+				<div className="absolute right-3 top-3 md:right-5 md:top-5 lg:right-14 lg:top-10">
+					<CloseButton />
+				</div>
 			</div>
 			<div className="px-4">
 				<h1>{movie?.tenPhim}</h1>

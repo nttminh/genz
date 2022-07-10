@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import movieReducers, { randomizeHighlightMovie } from '../../../Slices/movie';
 import ReactTooltip from 'react-tooltip';
 import VideoPlayer from 'Components/VideoPlayer';
+import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
 
 type Props = {};
 
@@ -55,7 +56,7 @@ const Banner = (props: Props) => {
 		return <h1>Loading banner...</h1>;
 	}
 
-	if (window.innerWidth > 768 && !isTrailerDone) {
+	if (window.innerWidth > 768) {
 		return (
 			<>
 				<div
@@ -65,17 +66,20 @@ const Banner = (props: Props) => {
 						background: `
 					linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,100)),
 					url(${
-						highlightMovie.hinhAnh && highlightMovie.hinhAnh
+						highlightMovie.hinhAnh &&
+						getYoutubeThumbnail(highlightMovie.trailer)
 					}) center/contain no-repeat
 					`,
 					}}
 				>
 					<div className="w-full h-full pointer-events-none">
-						<VideoPlayer
-							movie={highlightMovie}
-							muted
-							setIsTrailerDone={setIsTrailerDone}
-						/>
+						{!isTrailerDone && (
+							<VideoPlayer
+								movie={highlightMovie}
+								muted
+								setIsTrailerDone={setIsTrailerDone}
+							/>
+						)}
 					</div>
 					<div className="absolute w-1/2 h-full inset-0 flex flex-col justify-center px-4 bg-gradient-to-r from-black to-transparent">
 						<h1 className="font-bold">{highlightMovie.tenPhim}</h1>
