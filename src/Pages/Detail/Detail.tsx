@@ -9,6 +9,9 @@ import movieAPI from 'Services/movieAPI';
 import VideoPlayer from 'Components/VideoPlayer';
 import CloseButton from './Components/CloseButton';
 import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { formatDate } from 'Helpers/formatDate';
 
 type Props = {};
 
@@ -42,10 +45,14 @@ const Detail = (props: Props) => {
 					`,
 				}}
 			>
-				{!movie && <h4>Trailer will be updated</h4>}
+				{!movie && (
+					<div className="w-full h-full">
+						<Skeleton className="h-full" />
+					</div>
+				)}
 
 				{movie && (
-					<div className="wrapper w-screen h-full">
+					<div className="w-screen h-full">
 						{!isTrailerDone && (
 							<VideoPlayer
 								movie={movie}
@@ -59,10 +66,19 @@ const Detail = (props: Props) => {
 					<CloseButton />
 				</div>
 			</div>
-			<div className="px-4">
-				<h1>{movie?.tenPhim}</h1>
-				<p>Ngày khởi chiếu: {movie?.ngayKhoiChieu}</p>
-				<p>Mô tả: {movie?.moTa}</p>
+			<div className="p-4">
+				<h1>
+					{movie ? movie?.tenPhim : <Skeleton className="w-3/5" />}
+				</h1>
+				<p>
+					Ngày khởi chiếu:{' '}
+					{movie ? (
+						formatDate(movie?.ngayKhoiChieu)
+					) : (
+						<Skeleton className="w-2/5" />
+					)}
+				</p>
+				<p>Mô tả: {movie ? movie?.moTa : <Skeleton count={8} />}</p>
 			</div>
 			<div className="text-center mt-8">
 				<Button radius="sm" color="red" leftIcon={<Plus />}>

@@ -9,6 +9,8 @@ import movieReducers, { randomizeHighlightMovie } from '../../../Slices/movie';
 import ReactTooltip from 'react-tooltip';
 import VideoPlayer from 'Components/VideoPlayer';
 import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 type Props = {};
 
@@ -52,9 +54,28 @@ const Banner = (props: Props) => {
 			});
 	};
 
-	if (!highlightMovie) {
-		return <h1>Loading banner...</h1>;
-	}
+	// if (!highlightMovie) {
+	// 	return (
+	// 		<div className="relative -mt-[76px] h-144">
+	// 			<div className="absolute w-1/2 h-full inset-0 flex flex-col justify-center px-4 bg-gradient-to-r from-black to-transparent">
+	// 				<h1>
+	// 					<Skeleton width={300} />
+	// 				</h1>
+	// 				<Skeleton count={3} />
+	// 				<div className="mt-4 w-3/5 lg:w-2/5 flex justify-start items-center">
+	// 					<Skeleton width={24} height={24} className="mr-4" />
+	// 					<Skeleton width={115} height={36} className="mr-4" />
+	// 					<Skeleton
+	// 						width={24}
+	// 						height={24}
+	// 						circle
+	// 						className="mr-4"
+	// 					/>
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	if (window.innerWidth > 768) {
 		return (
@@ -66,8 +87,9 @@ const Banner = (props: Props) => {
 						background: `
 					linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,100)),
 					url(${
-						highlightMovie.hinhAnh &&
-						getYoutubeThumbnail(highlightMovie.trailer)
+						highlightMovie?.hinhAnh
+							? getYoutubeThumbnail(highlightMovie.trailer)
+							: ''
 					}) center/contain no-repeat
 					`,
 					}}
@@ -82,9 +104,15 @@ const Banner = (props: Props) => {
 						)}
 					</div>
 					<div className="absolute w-1/2 h-full inset-0 flex flex-col justify-center px-4 bg-gradient-to-r from-black to-transparent">
-						<h1 className="font-bold">{highlightMovie.tenPhim}</h1>
-						<p className="line-clamp-2">{highlightMovie.moTa}</p>
-						<div className="mt-4 w-3/5 lg:w-2/5 flex justify-around items-start">
+						<h1 className="font-bold">
+							{highlightMovie?.tenPhim || (
+								<Skeleton width={300} />
+							)}
+						</h1>
+						<p className="line-clamp-2">
+							{highlightMovie?.moTa || <Skeleton count={2} />}
+						</p>
+						<div className="mt-4 w-3/5 lg:w-2/5 flex justify-around items-center">
 							<ActionIcon
 								data-tip="Đã sao chép link"
 								data-event="click"
@@ -96,7 +124,7 @@ const Banner = (props: Props) => {
 							</Button>
 							<ActionIcon
 								component={Link}
-								to={`/${highlightMovie.maPhim}`}
+								to={`/${highlightMovie?.maPhim}`}
 							>
 								<InfoCircle />
 							</ActionIcon>
@@ -121,14 +149,14 @@ const Banner = (props: Props) => {
 				background: `
 				linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,100)),
 				url(${
-					highlightMovie.hinhAnh && highlightMovie.hinhAnh
+					highlightMovie?.hinhAnh ? highlightMovie.hinhAnh : ''
 				}) center/contain no-repeat
 				`,
 			}}
 		>
 			<div className="w-full h-full pb-6 flex flex-col justify-end">
 				<h1 className="text-center font-extrabold mb-4">
-					{highlightMovie.tenPhim}
+					{highlightMovie?.tenPhim || <Skeleton width={300} />}
 				</h1>
 				<div className="actions w-3/5 lg:w-1/5 flex justify-between items-center mx-auto">
 					<ActionIcon data-tip="Đã sao chép link" data-event="click">
@@ -139,7 +167,7 @@ const Banner = (props: Props) => {
 					</Button>
 					<ActionIcon
 						component={Link}
-						to={`/${highlightMovie.maPhim}`}
+						to={`/${highlightMovie?.maPhim}` || ''}
 					>
 						<InfoCircle />
 					</ActionIcon>

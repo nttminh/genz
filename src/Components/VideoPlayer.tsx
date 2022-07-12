@@ -4,7 +4,7 @@ import React from 'react';
 import ReactPlayer, { YouTubeConfig } from 'react-player/youtube';
 
 type Props = {
-	movie: Movie;
+	movie: Movie | null;
 	muted?: boolean;
 	setIsTrailerDone?: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -16,7 +16,7 @@ const VideoPlayer = ({
 	setIsTrailerDone = defaultFunction,
 	...rest
 }: Props) => {
-	if (movie.trailer === '') {
+	if (movie?.trailer == '') {
 		return (
 			<div className="absolute inset-0 w-full h-full flex justify-center items-center">
 				<h2>Phim này không có trailer</h2>

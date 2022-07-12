@@ -8,6 +8,8 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Scrollbar } from 'swiper';
 import { useNavigate } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
+import MovieImage from './MovieImage';
 
 interface Props {
 	initialSlide?: number;
@@ -26,7 +28,44 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 
 	if (isLoading) {
 		// TODO: Loading component
-		return <h1>Loading...</h1>;
+		return (
+			<Swiper
+				modules={[Scrollbar]}
+				centeredSlides
+				loop
+				spaceBetween={10}
+				initialSlide={initialSlide} // will be removed when last photo from db is updated
+				slidesPerView={3.3}
+				scrollbar={{ enabled: true, draggable: true }}
+				breakpoints={{
+					// when window width is >= 640px
+					640: {
+						slidesPerView: 4,
+						spaceBetween: 10,
+					},
+					// when window width is <= 768px
+					768: {
+						slidesPerView: 5,
+						spaceBetween: 10,
+					},
+					// when window width is > 768px
+					1024: {
+						slidesPerView: 7,
+						spaceBetween: 10,
+					},
+				}}
+				// onSlideChange={() => console.log('slide change')}
+				// onSwiper={(swiper) => console.log(swiper)}
+			>
+				{Array.from(Array(10).keys()).map((number: number) => (
+					<SwiperSlide key={number}>
+						<div className="w-full h-56 group cursor-pointer">
+							<MovieImage />
+						</div>
+					</SwiperSlide>
+				))}
+			</Swiper>
+		);
 	}
 
 	if (error) {
@@ -40,14 +79,6 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 
 	return (
 		<div>
-			{/* {movies.map((movie: Movie) => {
-				return (
-					<div key={movie.maPhim}>
-						<h3>{movie.tenPhim}</h3>
-						<img src={movie.hinhAnh} alt="" />
-					</div>
-				);
-			})} */}
 			<Swiper
 				modules={[Scrollbar]}
 				centeredSlides
@@ -84,11 +115,7 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 								handleOnMovieClick(movie.maPhim);
 							}}
 						>
-							<img
-								className="h-full mx-auto object-cover object-center rounded-md transition duration-300 group-hover:scale-75"
-								src={movie.hinhAnh}
-								alt={movie.tenPhim}
-							/>
+							<MovieImage movie={movie} />
 						</div>
 					</SwiperSlide>
 				))}

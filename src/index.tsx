@@ -8,6 +8,7 @@ import { MantineProvider, Button, MantineThemeOverride } from '@mantine/core';
 
 //setup redux
 import store from './configStore';
+import { SkeletonTheme } from 'react-loading-skeleton';
 // import Demo from "./_Playground/StyledComponents/Demo";
 
 const root = ReactDOM.createRoot(
@@ -37,14 +38,16 @@ const myTheme: MantineThemeOverride = {
 
 root.render(
 	<Provider store={store}>
-		<MantineProvider
-			theme={myTheme}
-			withGlobalStyles
-			withNormalizeCSS
-			emotionOptions={{ key: 'mantine', prepend: false }}
-		>
-			<App />
-		</MantineProvider>
+		<SkeletonTheme baseColor="#202020" highlightColor="#444">
+			<MantineProvider
+				theme={myTheme}
+				withGlobalStyles
+				withNormalizeCSS
+				emotionOptions={{ key: 'mantine', prepend: false }}
+			>
+				<App />
+			</MantineProvider>
+		</SkeletonTheme>
 	</Provider>
 );
 
