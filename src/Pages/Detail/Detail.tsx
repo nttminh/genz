@@ -12,24 +12,31 @@ import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { formatDate } from 'Helpers/formatDate';
+import { useDispatch } from 'react-redux';
+import { setHighlightMovie } from 'Slices/movie';
 
 type Props = {};
 
 const Detail = (props: Props) => {
 	const { id } = useParams();
+	const dispatch = useDispatch();
 	const [movie, setMovie] = useState<Movie>();
 	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
 
 	useEffect(() => {
 		async function fetchData() {
-			// You can await here
 			let data = await movieAPI.getMovieDetails(id!);
 			console.log(data);
 			setMovie(data);
-			// ...
 		}
 		fetchData();
 	}, [id]);
+
+	useEffect(() => {
+		if (movie) {
+			dispatch(setHighlightMovie(movie));
+		}
+	}, [movie]);
 
 	return (
 		<>

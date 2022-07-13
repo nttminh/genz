@@ -42,6 +42,9 @@ const movieSlice = createSlice({
 			);
 			state.highlightMovie = state.movies[randomNumber];
 		},
+		setHighlightMovie: (state, action: PayloadAction<Movie>) => {
+			state.highlightMovie = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getMovieShowing.pending, (state) => {
@@ -59,7 +62,7 @@ const movieSlice = createSlice({
 });
 
 // export actions
-export const { randomizeHighlightMovie } = movieSlice.actions;
+export const { randomizeHighlightMovie, setHighlightMovie } = movieSlice.actions;
 
 // export reducer
 export default movieSlice.reducer;

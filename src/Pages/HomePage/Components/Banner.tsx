@@ -23,7 +23,9 @@ const Banner = (props: Props) => {
 	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
 
 	useEffect(() => {
-		dispatch(randomizeHighlightMovie());
+		if (!highlightMovie) {
+			dispatch(randomizeHighlightMovie());
+		}
 	}, [movies]);
 
 	async function copyTextToClipboard() {
