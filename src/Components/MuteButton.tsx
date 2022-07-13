@@ -20,10 +20,14 @@ const MuteButton = ({ playerRef }: Props) => {
 	};
 
 	return (
-		<div className="border rounded-full p-1" onClick={handleOnClick}>
+		<div className="border rounded-full md:p-1" onClick={handleOnClick}>
 			<ActionIcon>
-				{!isMuted && <Volume size={58} />}
-				{isMuted && <VolumeOff size={58} />}
+				{!isMuted && (
+					<Volume size={window.innerWidth < 768 ? 20 : 58} />
+				)}
+				{isMuted && (
+					<VolumeOff size={window.innerWidth < 768 ? 20 : 58} />
+				)}
 			</ActionIcon>
 		</div>
 	);

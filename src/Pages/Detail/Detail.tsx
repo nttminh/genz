@@ -74,7 +74,7 @@ const Detail = (props: Props) => {
 					</div>
 				)}
 
-				<div className="absolute md:right-5 md:bottom-5 lg:right-14 lg:bottom-14 z-10">
+				<div className="absolute right-3 bottom-3 md:right-5 md:bottom-5 lg:right-14 lg:bottom-14 z-10">
 					<MuteButton playerRef={playerRef} />
 				</div>
 
