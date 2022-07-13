@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import ReactPlayer from 'react-player/youtube';
@@ -14,6 +14,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { formatDate } from 'Helpers/formatDate';
 import { useDispatch } from 'react-redux';
 import { setHighlightMovie } from 'Slices/movie';
+import YouTubePlayer from 'react-player/youtube';
+import MuteButton from 'Components/MuteButton';
 
 type Props = {};
 
@@ -21,6 +23,7 @@ const Detail = (props: Props) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const [movie, setMovie] = useState<Movie>();
+	const playerRef = useRef<YouTubePlayer>(null);
 	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -59,15 +62,21 @@ const Detail = (props: Props) => {
 				)}
 
 				{movie && (
-					<div className="w-screen h-full">
+					<div className="w-full h-full pointer-events-none">
 						{!isTrailerDone && (
 							<VideoPlayer
+								playerRef={playerRef}
 								movie={movie}
+								muted
 								setIsTrailerDone={setIsTrailerDone}
 							/>
 						)}
 					</div>
 				)}
+
+				<div className="absolute md:right-5 md:bottom-5 lg:right-14 lg:bottom-14 z-10">
+					<MuteButton playerRef={playerRef} />
+				</div>
 
 				<div className="absolute right-3 top-3 md:right-5 md:top-5 lg:right-14 lg:top-10">
 					<CloseButton />

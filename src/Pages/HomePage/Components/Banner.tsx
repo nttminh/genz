@@ -1,6 +1,6 @@
 import { ActionIcon, Button } from '@mantine/core';
 import { AppDispatch, RootState } from 'configStore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InfoCircle, Share, Plus, ClipboardCheck } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,8 @@ import VideoPlayer from 'Components/VideoPlayer';
 import { getYoutubeThumbnail } from 'Helpers/getYoutubeThumbnail';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import MuteButton from 'Components/MuteButton';
+import YouTubePlayer from 'react-player/youtube';
 
 type Props = {};
 
@@ -21,6 +23,7 @@ const Banner = (props: Props) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const [isCopied, setIsCopied] = useState<boolean>(false);
 	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
+	const playerRef = useRef<YouTubePlayer>(null);
 
 	useEffect(() => {
 		if (!highlightMovie) {
@@ -56,29 +59,6 @@ const Banner = (props: Props) => {
 			});
 	};
 
-	// if (!highlightMovie) {
-	// 	return (
-	// 		<div className="relative -mt-[76px] h-144">
-	// 			<div className="absolute w-1/2 h-full inset-0 flex flex-col justify-center px-4 bg-gradient-to-r from-black to-transparent">
-	// 				<h1>
-	// 					<Skeleton width={300} />
-	// 				</h1>
-	// 				<Skeleton count={3} />
-	// 				<div className="mt-4 w-3/5 lg:w-2/5 flex justify-start items-center">
-	// 					<Skeleton width={24} height={24} className="mr-4" />
-	// 					<Skeleton width={115} height={36} className="mr-4" />
-	// 					<Skeleton
-	// 						width={24}
-	// 						height={24}
-	// 						circle
-	// 						className="mr-4"
-	// 					/>
-	// 				</div>
-	// 			</div>
-	// 		</div>
-	// 	);
-	// }
-
 	if (window.innerWidth > 768) {
 		return (
 			<>
@@ -98,13 +78,20 @@ const Banner = (props: Props) => {
 				>
 					<div className="w-full h-full pointer-events-none">
 						{!isTrailerDone && (
-							<VideoPlayer
-								movie={highlightMovie}
-								muted
-								setIsTrailerDone={setIsTrailerDone}
-							/>
+							<>
+								<VideoPlayer
+									playerRef={playerRef}
+									movie={highlightMovie}
+									muted
+									setIsTrailerDone={setIsTrailerDone}
+								/>
+							</>
 						)}
 					</div>
+					<div className="absolute md:right-5 md:bottom-12 lg:right-14 lg:bottom-14 z-10">
+						<MuteButton playerRef={playerRef} />
+					</div>
+
 					<div className="absolute w-1/2 h-full inset-0 flex flex-col justify-center px-4 bg-gradient-to-r from-black to-transparent">
 						<h1 className="font-bold">
 							{highlightMovie?.tenPhim || (

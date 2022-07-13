@@ -5,6 +5,7 @@ import ReactPlayer, { YouTubeConfig } from 'react-player/youtube';
 
 type Props = {
 	movie: Movie | null;
+	playerRef?: React.RefObject<ReactPlayer>;
 	muted?: boolean;
 	setIsTrailerDone?: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -12,6 +13,7 @@ type Props = {
 const defaultFunction = () => {};
 
 const VideoPlayer = ({
+	playerRef,
 	movie,
 	setIsTrailerDone = defaultFunction,
 	...rest
@@ -29,6 +31,7 @@ const VideoPlayer = ({
 			// url={`https://www.youtube-nocookie.com/embed/${
 			// 	playerVideo?.trailer?.id || ''
 			// }`}
+			ref={playerRef}
 			url={
 				movie
 					? `http://www.youtube-nocookie.com/embed/${youtubeParser(
