@@ -8,7 +8,6 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Scrollbar } from 'swiper';
 import { useNavigate } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
 import MovieImage from './MovieImage';
 
 interface Props {

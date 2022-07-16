@@ -1,4 +1,4 @@
-import Movie from 'Interface/movie';
+import Movie, { ShowTimes } from 'Interface/movie';
 import axiosClient from './axiosClient';
 
 const movieAPI = {
@@ -12,6 +12,16 @@ const movieAPI = {
 				maPhim: movieId,
 			},
 		});
+	},
+	getMovieShowTimes: (movieId: string) => {
+		return axiosClient.get<ShowTimes>(
+			'QuanLyRap/LayThongTinLichChieuPhim',
+			{
+				params: {
+					maPhim: movieId,
+				},
+			}
+		);
 	},
 	// Và những còn lại liên quan đến movie...
 };

@@ -1,12 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import movie from "./Slices/movie";
-import auth from "./Slices/auth";
+import { configureStore } from '@reduxjs/toolkit';
+import movie from 'Slices/movie';
+import auth from 'Slices/auth';
+import cart from 'Slices/cart';
 
 const store = configureStore({
-  reducer: {
-    movie,
-    auth,
-  },
+	reducer: {
+		movie,
+		auth,
+		cart,
+	},
 });
 
 // type cho hàm dispatch

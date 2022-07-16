@@ -9,6 +9,7 @@ import About from './Pages/About/About';
 import Checkout from './Pages/Checkout/Checkout';
 import ProtectedRoute from 'Routes/ProtectedRoute';
 import Detail from 'Pages/Detail/Detail';
+import ReservePage from 'Pages/Reserve/ReservePage';
 
 function App(): React.ReactElement {
 	return (
@@ -26,6 +27,14 @@ function App(): React.ReactElement {
 							<ProtectedRoute>
 								<Checkout />
 							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="reserve/:id"
+						element={
+							// <ProtectedRoute>
+							<ReservePage />
+							// </ProtectedRoute>
 						}
 					/>
 					<Route index element={<HomePage />} />
