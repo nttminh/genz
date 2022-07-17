@@ -1,17 +1,19 @@
-import { Outlet } from 'react-router-dom';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 type Props = {};
 
 function HomeTemplate({}: Props) {
-	return (
-		<div>
-			<Header />
-			<Outlet />
-			<Footer />
-		</div>
-	);
+  return (
+    <>
+      <div className="flex flex-row">
+        <Header />
+        <Outlet />
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 export default HomeTemplate;
