@@ -1,4 +1,8 @@
-export const formatDate = (date: string) => {
+export const formatDate = (date: Date | string | undefined | null): string => {
+	if (!date) {
+		return '';
+	}
+
 	const d = new Date(date);
 	let month = '' + (d.getMonth() + 1);
 	let day = '' + d.getDate();

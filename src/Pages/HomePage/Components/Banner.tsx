@@ -157,7 +157,13 @@ const Banner = (props: Props) => {
 					<ActionIcon data-tip="Đã sao chép link" data-event="click">
 						{isCopied ? <ClipboardCheck /> : <Share />}
 					</ActionIcon>
-					<Button radius="sm" color="red" leftIcon={<Plus />}>
+					<Button
+						component={Link}
+						to={`/reserve/${highlightMovie?.maPhim}`}
+						radius="sm"
+						color="red"
+						leftIcon={<Plus />}
+					>
 						Đặt vé
 					</Button>
 					<ActionIcon

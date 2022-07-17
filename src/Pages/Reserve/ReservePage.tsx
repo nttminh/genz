@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Menu } from '@mantine/core';
 import { getMovieShowTimes } from 'Slices/cart';
-import movieAPI from 'Services/movieAPI';
-import { AnyAction } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from 'configStore';
-import { H4 } from 'tabler-icons-react';
+import {
+	Settings,
+} from 'tabler-icons-react';
+import { formatDate } from 'Helpers/formatDate';
+import { HeThongRapChieu } from 'Interface/movie';
+import CinemaSelection from './Components/CinemaSelection';
+
 
 type Props = {};
 
@@ -20,27 +25,50 @@ const ReservePage = (props: Props) => {
 		dispatch(getMovieShowTimes(id!));
 	}, []);
 
+	useEffect(() => {
+		console.log(movieShowTimes);
+	}, [movieShowTimes]);
+
+	const handleOnClick = (hethongrapchieu: HeThongRapChieu) => {
+		console.log(hethongrapchieu);
+	};
+
 	return (
 		<div className="p-4">
 			<h1>{movieShowTimes?.tenPhim}</h1>
+			<p>Ngày khởi chiếu: {formatDate(movieShowTimes?.ngayKhoiChieu)}</p>
 			<br />
 			<hr />
 			<br />
 			<h2>Rạp đang chiếu</h2>
 			<br />
-			{movieShowTimes?.heThongRapChieu.map((hethongrapchieu) => (
-				<div
-					key={hethongrapchieu.maHeThongRap}
-					className="flex pb-2 border-b-2 border-b-neutral-700 items-center"
+			{movieShowTimes?.heThongRapChieu.map((heThongRapChieu) => (
+				<Menu
+					key={heThongRapChieu.maHeThongRap}
+					control={
+						<CinemaSelection
+							heThongRapChieu={heThongRapChieu}
+							handleOnClick={handleOnClick}
+						/>
+					}
+					transition="rotate-right"
+					transitionDuration={100}
+					transitionTimingFunction="ease"
 				>
-					<img
-						src={hethongrapchieu.logo}
-						alt=""
-						className="w-10 h-10 mr-4"
-					/>
-					<h4>{hethongrapchieu.tenHeThongRap}</h4>
-				</div>
+					{heThongRapChieu.cumRapChieu.map((cumRapChieu) => (
+						<Menu.Item icon={<Settings size={14} />}>
+							{cumRapChieu.tenCumRap}
+						</Menu.Item>
+					))}
+				</Menu>
 			))}
+
+			{!movieShowTimes?.heThongRapChieu.length && (
+				<h4>
+					Hiện tại chưa có rạp nào chiếu phim này. Thông tin chi tiết
+					sẽ được cập nhật trong thời gian tới.
+				</h4>
+			)}
 		</div>
 	);
 };
