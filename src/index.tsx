@@ -1,57 +1,51 @@
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import './index.css';
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import "./index.css";
 
-import { MantineProvider, Button, MantineThemeOverride } from '@mantine/core';
+import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 
-//setup redux
-import store from './configStore';
-import { SkeletonTheme } from 'react-loading-skeleton';
-// import Demo from "./_Playground/StyledComponents/Demo";
+import store from "./configStore";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const root = ReactDOM.createRoot(
-	document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 const myTheme: MantineThemeOverride = {
-	colorScheme: 'dark',
-	primaryColor: 'red',
-	defaultRadius: 0,
-	colors: {
-		// override dark colors to change them for all components
-		dark: [
-			'#d5d7e0',
-			'#acaebf',
-			'#8c8fa3',
-			'#666980',
-			'#4d4f66',
-			'#34354a',
-			'#2b2c3d',
-			'#000',
-			'#0000',
-			'#000',
-		],
-	},
+  primaryColor: "pink",
+  defaultRadius: 0,
+  colors: {
+    // override dark colors to change them for all components
+    dark: [
+      "#d5d7e0",
+      "#acaebf",
+      "#8c8fa3",
+      "#666980",
+      "#4d4f66",
+      "#34354a",
+      "#2b2c3d",
+      "#000",
+      "#0000",
+      "#000",
+    ],
+  },
 };
 
 root.render(
-	<Provider store={store}>
-		<SkeletonTheme baseColor="#202020" highlightColor="#444">
-			<MantineProvider
-				theme={myTheme}
-				withGlobalStyles
-				withNormalizeCSS
-				emotionOptions={{ key: 'mantine', prepend: false }}
-			>
-				<App />
-			</MantineProvider>
-		</SkeletonTheme>
-	</Provider>
+  <Provider store={store}>
+    <SkeletonTheme>
+      <MantineProvider
+        theme={myTheme}
+        withGlobalStyles
+        withNormalizeCSS
+        emotionOptions={{ key: "mantine", prepend: false }}
+      >
+        <App />
+      </MantineProvider>
+    </SkeletonTheme>
+  </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

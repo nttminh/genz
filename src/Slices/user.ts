@@ -1,30 +1,41 @@
+import movieAPI from "Services/movieAPI";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import Movie from "Interface/movie";
-import movieAPI from "../Services/movieAPI";
+import { User } from "Interface/user";
+import userAPI from "Services/userAPI";
 
 interface State {
-  movies: Movie[];
+  users: User[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: State = {
-  movies: [],
+  users: [],
   isLoading: false,
   error: null,
 };
 
 // thunk actions
-export const getMovieList = createAsyncThunk("movie/getMovieList", async () => {
+export const getUserList = createAsyncThunk("user/getUserList", async () => {
   try {
-    console.log("thunk action get move lsit)");
-    const data = await movieAPI.getMovieList();
+    const data = await userAPI.getUserList();
     return data;
   } catch (error) {
     throw error;
   }
 });
 
+export const getUser = createAsyncThunk(
+  "user/getUser",
+  async (keyword: string) => {
+    try {
+      const data = await userAPI.getUser(keyword);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const addNewMovie = createAsyncThunk("movie/addNewMovie", async () => {
   try {
     // const data = await movieAPI.addNewMovie();
@@ -52,21 +63,21 @@ export const deleteMovie = createAsyncThunk("movie/deleteMovie", async () => {
   }
 });
 
-const movieSlice = createSlice({
-  name: "movie",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     tmp: () => {},
   },
   extraReducers: (builder) => {
-    builder.addCase(getMovieList.pending, (state) => {
+    builder.addCase(getUserList.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getMovieList.fulfilled, (state, { payload }) => {
+    builder.addCase(getUserList.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.movies = payload;
+      state.users = payload;
     });
-    builder.addCase(getMovieList.rejected, (state, { error }) => {
+    builder.addCase(getUserList.rejected, (state, { error }) => {
       state.isLoading = false;
       state.error = error as any;
     });
@@ -74,7 +85,7 @@ const movieSlice = createSlice({
 });
 
 // export actions
-export const { tmp } = movieSlice.actions;
+export const { tmp } = userSlice.actions;
 
 // export reducer
-export default movieSlice.reducer;
+export default userSlice.reducer;

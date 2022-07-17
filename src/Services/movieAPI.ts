@@ -1,29 +1,20 @@
-import Movie, { ShowTimes } from 'Interface/movie';
-import axiosClient from './axiosClient';
+import Movie, { ShowTimes } from "Interface/movie";
+import axiosAdmin from "./axiosAdmin";
 
 const movieAPI = {
-	getMovieShowing: () => {
-		// Khai báo hàm call API dữ liệu trả về là Movie[]
-		return axiosClient.get<Movie[]>('QuanLyPhim/LayDanhSachPhim');
-	},
-	getMovieDetails: (movieId: string) => {
-		return axiosClient.get<Movie>('QuanLyPhim/LayThongTinPhim', {
-			params: {
-				maPhim: movieId,
-			},
-		});
-	},
-	getMovieShowTimes: (movieId: string) => {
-		return axiosClient.get<ShowTimes>(
-			'QuanLyRap/LayThongTinLichChieuPhim',
-			{
-				params: {
-					maPhim: movieId,
-				},
-			}
-		);
-	},
-	// Và những còn lại liên quan đến movie...
+  getMovieList: () => {
+    return axiosAdmin.get<Movie[]>("QuanLyPhim/LayDanhSachPhim");
+  },
+  addNewMovie: (movieId: string) => {
+    return axiosAdmin.post<Movie>("QuanLyPhim/ThemPhimUploadHinh", {});
+  },
+  updateMovie: (movieId: string) => {
+    return axiosAdmin.get<ShowTimes>("QuanLyPhim/CapNhatPhimUpload", {});
+  },
+  deleteMovie: () => {
+    return axiosAdmin.delete<Movie>("QuanLyPhim/XoaPhim");
+  },
+  // Và những còn lại liên quan đến movie...
 };
 
 export default movieAPI;
