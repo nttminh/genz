@@ -73,10 +73,10 @@ const UserList = (props: Props) => {
         </InputWrapper>
         <InputWrapper id="name">
           <Input id="name" value={selectedUser.hoTen} />
-        </InputWrapper>
+        </InputWrapper>{" "}
         <InputWrapper id="email">
           <Input id="email" value={selectedUser.email} />
-        </InputWrapper>
+        </InputWrapper>{" "}
         <InputWrapper id="phone">
           <Input id="phone" value={selectedUser.soDT} />
         </InputWrapper>
