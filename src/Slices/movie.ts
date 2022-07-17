@@ -1,80 +1,68 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import Movie from "Interface/movie";
-import movieAPI from "../Services/movieAPI";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import Movie from 'Interface/movie';
+import movieAPI from '../Services/movieAPI';
 
 interface State {
-  movies: Movie[];
-  isLoading: boolean;
-  error: string | null;
+	movies: Movie[];
+	highlightMovie: Movie | null;
+	isLoading: boolean;
+	error: string | null;
 }
 
 const initialState: State = {
-  movies: [],
-  isLoading: false,
-  error: null,
+	movies: [],
+	highlightMovie: null,
+	isLoading: false,
+	error: null,
 };
 
 // thunk actions
-export const getMovieList = createAsyncThunk("movie/getMovieList", async () => {
-  try {
-    console.log("thunk action get move lsit)");
-    const data = await movieAPI.getMovieList();
-    return data;
-  } catch (error) {
-    throw error;
-  }
-});
-
-export const addNewMovie = createAsyncThunk("movie/addNewMovie", async () => {
-  try {
-    // const data = await movieAPI.addNewMovie();
-    // return data;
-  } catch (error) {
-    throw error;
-  }
-});
-
-export const updateMovie = createAsyncThunk("movie/updateMovie", async () => {
-  try {
-    // const data = await movieAPI.updateMovie();
-    // return data;
-  } catch (error) {
-    throw error;
-  }
-});
-
-export const deleteMovie = createAsyncThunk("movie/deleteMovie", async () => {
-  try {
-    const data = await movieAPI.deleteMovie();
-    return data;
-  } catch (error) {
-    throw error;
-  }
-});
+export const getMovieShowing = createAsyncThunk(
+	'movie/getMovieShowing',
+	async () => {
+		try {
+			const data = await movieAPI.getMovieShowing();
+			return data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
 
 const movieSlice = createSlice({
-  name: "movie",
-  initialState,
-  reducers: {
-    tmp: () => {},
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getMovieList.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getMovieList.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.movies = payload;
-    });
-    builder.addCase(getMovieList.rejected, (state, { error }) => {
-      state.isLoading = false;
-      state.error = error as any;
-    });
-  },
+	name: 'movie',
+	initialState,
+	reducers: {
+		randomizeHighlightMovie: (
+			state,
+			action: PayloadAction<string | undefined>
+		) => {
+			const randomNumber = Math.floor(
+				Math.random() * state.movies.length
+			);
+			state.highlightMovie = state.movies[randomNumber];
+		},
+		setHighlightMovie: (state, action: PayloadAction<Movie>) => {
+			state.highlightMovie = action.payload;
+		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getMovieShowing.pending, (state) => {
+			state.isLoading = true;
+		});
+		builder.addCase(getMovieShowing.fulfilled, (state, { payload }) => {
+			state.isLoading = false;
+			state.movies = payload;
+		});
+		builder.addCase(getMovieShowing.rejected, (state, { error }) => {
+			state.isLoading = false;
+			state.error = error as any;
+		});
+	},
 });
 
 // export actions
-export const { tmp } = movieSlice.actions;
+export const { randomizeHighlightMovie, setHighlightMovie } = movieSlice.actions;
 
 // export reducer
 export default movieSlice.reducer;
