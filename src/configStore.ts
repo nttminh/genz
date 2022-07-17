@@ -1,14 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import movie from "Slices/movie";
-import auth from "Slices/auth";
-import user from "Slices/user";
+import { configureStore } from '@reduxjs/toolkit';
+import movie from 'Slices/movie';
+import auth from 'Slices/auth';
+import cart from 'Slices/cart';
 
 const store = configureStore({
-  reducer: {
-    movie,
-    user,
-    auth,
-  },
+	reducer: {
+		movie,
+		auth,
+		cart,
+	},
 });
 
 // type cho hàm dispatch
@@ -17,3 +17,12 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
+
+//utility type
+//ReturnType: trả vê type của object
+//type abc (biến type giống var let const)
+// function A(): number {
+//   return 123;
+// }
+// // () => number
+// type typeCuaHamA = ReturnType<typeof A>;
