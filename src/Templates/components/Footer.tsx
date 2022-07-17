@@ -12,7 +12,11 @@ const Footer = (props: Props) => {
 					to="/"
 					className="flex justify-center items-center mb-4 sm:mb-0"
 				>
-					<img src="logo2.svg" className="mr-3 h-8" alt="GenZ Logo" />
+					<img
+						src="/logo2.svg"
+						className="mr-3 h-8"
+						alt="GenZ Logo"
+					/>
 
 					<span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
 						GenZ

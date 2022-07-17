@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { setHighlightMovie } from 'Slices/movie';
 import YouTubePlayer from 'react-player/youtube';
 import MuteButton from 'Components/MuteButton';
+import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -97,7 +98,13 @@ const Detail = (props: Props) => {
 				<p>Mô tả: {movie ? movie?.moTa : <Skeleton count={8} />}</p>
 			</div>
 			<div className="text-center mt-8">
-				<Button radius="sm" color="red" leftIcon={<Plus />}>
+				<Button
+					component={Link}
+					to={`/reserve/${id}`}
+					radius="sm"
+					color="red"
+					leftIcon={<Plus />}
+				>
 					Đặt vé
 				</Button>
 			</div>
