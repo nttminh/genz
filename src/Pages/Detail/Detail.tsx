@@ -97,7 +97,7 @@ const Detail = (props: Props) => {
 				</p>
 				<p>Mô tả: {movie ? movie?.moTa : <Skeleton count={8} />}</p>
 			</div>
-			<div className="text-center mt-8">
+			<div className="text-center mt-8 mb-12">
 				<Button
 					component={Link}
 					to={`/reserve/${id}`}

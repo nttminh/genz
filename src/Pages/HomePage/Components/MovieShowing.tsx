@@ -52,6 +52,14 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 						slidesPerView: 7,
 						spaceBetween: 10,
 					},
+					1280: {
+						slidesPerView: 11,
+						spaceBetween: 10,
+					},
+					1536: {
+						slidesPerView: 14,
+						spaceBetween: 10,
+					},
 				}}
 				// onSlideChange={() => console.log('slide change')}
 				// onSwiper={(swiper) => console.log(swiper)}

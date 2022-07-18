@@ -4,13 +4,11 @@ import { useParams } from 'react-router-dom';
 import { Menu } from '@mantine/core';
 import { getMovieShowTimes } from 'Slices/cart';
 import { AppDispatch, RootState } from 'configStore';
-import {
-	Settings,
-} from 'tabler-icons-react';
+import { Settings } from 'tabler-icons-react';
 import { formatDate } from 'Helpers/formatDate';
 import { HeThongRapChieu } from 'Interface/movie';
 import CinemaSelection from './Components/CinemaSelection';
-
+import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -43,24 +41,43 @@ const ReservePage = (props: Props) => {
 			<h2>Rạp đang chiếu</h2>
 			<br />
 			{movieShowTimes?.heThongRapChieu.map((heThongRapChieu) => (
-				<Menu
-					key={heThongRapChieu.maHeThongRap}
-					control={
-						<CinemaSelection
-							heThongRapChieu={heThongRapChieu}
-							handleOnClick={handleOnClick}
-						/>
-					}
-					transition="rotate-right"
-					transitionDuration={100}
-					transitionTimingFunction="ease"
-				>
-					{heThongRapChieu.cumRapChieu.map((cumRapChieu) => (
-						<Menu.Item icon={<Settings size={14} />}>
-							{cumRapChieu.tenCumRap}
-						</Menu.Item>
-					))}
-				</Menu>
+				<div key={heThongRapChieu.maHeThongRap}>
+					<Menu
+						control={
+							<CinemaSelection
+								heThongRapChieu={heThongRapChieu}
+								handleOnClick={handleOnClick}
+							/>
+						}
+						withArrow
+						styles={(theme) => ({
+							root: {
+								width: '100%',
+							},
+							body: {
+								backgroundColor: theme.colors.dark[7],
+							},
+							arrow: {
+								fill: theme.colors.dark[7],
+							},
+						})}
+						size="xl"
+						transition="scale"
+						transitionDuration={200}
+						transitionTimingFunction="ease"
+					>
+						{heThongRapChieu.cumRapChieu.map((cumRapChieu) => (
+							<Menu.Item
+								key={cumRapChieu.maCumRap}
+								// icon={<Settings size={14} />}
+								component={Link}
+								to={cumRapChieu.maCumRap}
+							>
+								{cumRapChieu.tenCumRap}
+							</Menu.Item>
+						))}
+					</Menu>
+				</div>
 			))}
 
 			{!movieShowTimes?.heThongRapChieu.length && (

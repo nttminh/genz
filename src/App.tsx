@@ -10,6 +10,7 @@ import Checkout from './Pages/Checkout/Checkout';
 import ProtectedRoute from 'Routes/ProtectedRoute';
 import Detail from 'Pages/Detail/Detail';
 import ReservePage from 'Pages/Reserve/ReservePage';
+import ChooseTimePage from 'Pages/ChooseTime/ChooseTimePage';
 
 function App(): React.ReactElement {
 	return (
@@ -21,6 +22,10 @@ function App(): React.ReactElement {
 					<Route path="register" element={<Register />} />
 					<Route path="about" element={<About />} />
 					<Route path="/:id" element={<Detail />} />
+					<Route
+						path="/reserve/:id/:maCumRap"
+						element={<ChooseTimePage />}
+					/>
 					<Route
 						path="checkout"
 						element={
