@@ -9,6 +9,7 @@ import { formatDate } from 'Helpers/formatDate';
 import { HeThongRapChieu } from 'Interface/movie';
 import CinemaSelection from './Components/CinemaSelection';
 import { Link } from 'react-router-dom';
+import BackButton from 'Components/BackButton';
 
 type Props = {};
 
@@ -33,10 +34,12 @@ const ReservePage = (props: Props) => {
 
 	return (
 		<div className="p-4">
+			<BackButton />
+			<br />
 			<h1>{movieShowTimes?.tenPhim}</h1>
 			<p>Ngày khởi chiếu: {formatDate(movieShowTimes?.ngayKhoiChieu)}</p>
 			<br />
-			<hr />
+			<hr className="w-1/2 mx-auto border-neutral-700" />
 			<br />
 			<h2>Rạp đang chiếu</h2>
 			<br />
