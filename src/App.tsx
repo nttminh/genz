@@ -23,7 +23,7 @@ function App(): React.ReactElement {
 					<Route path="about" element={<About />} />
 					<Route path="/:id" element={<Detail />} />
 					<Route
-						path="/reserve/:id/:maCumRap"
+						path="/reserve/:id/:maHeThongRap/:maCumRap"
 						element={<ChooseTimePage />}
 					/>
 					<Route

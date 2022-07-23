@@ -74,7 +74,7 @@ const ReservePage = (props: Props) => {
 								key={cumRapChieu.maCumRap}
 								// icon={<Settings size={14} />}
 								component={Link}
-								to={cumRapChieu.maCumRap}
+								to={`${heThongRapChieu.maHeThongRap}/${cumRapChieu.maCumRap}`}
 							>
 								{cumRapChieu.tenCumRap}
 							</Menu.Item>

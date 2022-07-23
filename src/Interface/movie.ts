@@ -37,7 +37,8 @@ export interface CumRapChieu {
 	lichChieuPhim: LichChieuPhim[];
 	maCumRap: string;
 	tenCumRap: string;
-	hinhAnh: null;
+	hinhAnh: string;
+	diaChi: string;
 }
 
 export interface LichChieuPhim {

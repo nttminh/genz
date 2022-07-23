@@ -1,4 +1,4 @@
-import { Button, Group, Tabs } from '@mantine/core';
+import { Button, Group, Image, Tabs } from '@mantine/core';
 import BackButton from 'Components/BackButton';
 import { AppDispatch, RootState } from 'configStore';
 import { formatDate } from 'Helpers/formatDate';
@@ -10,9 +10,15 @@ import { getMovieShowTimes } from 'Slices/cart';
 type Props = {};
 
 const ChooseTimePage = (props: Props) => {
-	const { id, maCumRap } = useParams();
+	const { id, maHeThongRap, maCumRap } = useParams();
 	const { movieShowTimes, isLoading, error } = useSelector(
 		(state: RootState) => state.cart
+	);
+	const heThongRapChieu = movieShowTimes?.heThongRapChieu.find(
+		(show) => show.maHeThongRap === maHeThongRap
+	);
+	const rapDaChon = heThongRapChieu?.cumRapChieu.find(
+		(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
 	);
 	const dispatch = useDispatch<AppDispatch>();
 	const [activeTab, setActiveTab] = useState(1);
@@ -26,12 +32,25 @@ const ChooseTimePage = (props: Props) => {
 			dispatch(getMovieShowTimes(id!));
 		}
 	}, []);
+	console.log(movieShowTimes);
+	console.log(rapDaChon);
 
 	return (
 		<div className="p-4">
 			<BackButton />
-			<h1>{movieShowTimes?.tenPhim}</h1>
-			<p>Ngày khởi chiếu: {formatDate(movieShowTimes?.ngayKhoiChieu)}</p>
+			<div className="mt-2 flex flex-col md:flex-row justify-around">
+				<div className="w-1/2md:w-fit md:h-44">
+					<Image height={150} radius="lg" src={rapDaChon?.hinhAnh} />
+				</div>
+				<div>
+					<h1>{rapDaChon?.tenCumRap}</h1>
+					<p>Địa chỉ: {rapDaChon?.diaChi}</p>
+					<p>
+						Ngày khởi chiếu:{' '}
+						{formatDate(movieShowTimes?.ngayKhoiChieu)}
+					</p>
+				</div>
+			</div>
 			<Tabs active={activeTab} onTabChange={onChange}>
 				<Tabs.Tab label="22/7">
 					<Group>

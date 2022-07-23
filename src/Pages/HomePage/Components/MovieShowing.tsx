@@ -22,7 +22,9 @@ const MovieShowing = ({ initialSlide = 1 }: Props) => {
 	const dispatch = useDispatch<AppDispatch>();
 
 	useEffect(() => {
-		dispatch(getMovieShowing());
+		if (movies.length === 0) {
+			dispatch(getMovieShowing());
+		}
 	}, []);
 
 	if (isLoading) {
