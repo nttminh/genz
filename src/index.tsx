@@ -4,7 +4,12 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import './index.css';
 
-import { MantineProvider, Button, MantineThemeOverride } from '@mantine/core';
+import {
+	MantineProvider,
+	Button,
+	MantineThemeOverride,
+	createEmotionCache,
+} from '@mantine/core';
 
 //setup redux
 import store from './configStore';
@@ -36,6 +41,8 @@ const myTheme: MantineThemeOverride = {
 	},
 };
 
+const myCache = createEmotionCache({ key: 'mantine', prepend: false });
+
 root.render(
 	<Provider store={store}>
 		<SkeletonTheme baseColor="#202020" highlightColor="#444">
@@ -43,7 +50,7 @@ root.render(
 				theme={myTheme}
 				withGlobalStyles
 				withNormalizeCSS
-				emotionOptions={{ key: 'mantine', prepend: false }}
+				emotionCache={myCache}
 			>
 				<App />
 			</MantineProvider>

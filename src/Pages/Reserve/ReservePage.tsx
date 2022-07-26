@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Menu } from '@mantine/core';
+import { createStyles, Menu } from '@mantine/core';
 import { getMovieShowTimes } from 'Slices/cart';
 import { AppDispatch, RootState } from 'configStore';
 import { Settings } from 'tabler-icons-react';
@@ -11,6 +11,16 @@ import CinemaSelection from './Components/CinemaSelection';
 import { Link } from 'react-router-dom';
 import BackButton from 'Components/BackButton';
 
+const useStyles = createStyles((theme) => ({
+	item: {
+		'&[data-hovered]': {
+			backgroundColor:
+				theme.colors[theme.primaryColor][theme.fn.primaryShade()],
+			color: theme.white,
+		},
+	},
+}));
+
 type Props = {};
 
 const ReservePage = (props: Props) => {
@@ -19,6 +29,7 @@ const ReservePage = (props: Props) => {
 		(state: RootState) => state.cart
 	);
 	const dispatch = useDispatch<AppDispatch>();
+	const { classes } = useStyles();
 
 	useEffect(() => {
 		dispatch(getMovieShowTimes(id!));
@@ -46,39 +57,42 @@ const ReservePage = (props: Props) => {
 			{movieShowTimes?.heThongRapChieu.map((heThongRapChieu) => (
 				<div key={heThongRapChieu.maHeThongRap}>
 					<Menu
-						control={
-							<CinemaSelection
-								heThongRapChieu={heThongRapChieu}
-								handleOnClick={handleOnClick}
-							/>
-						}
+						width={300}
 						withArrow
 						styles={(theme) => ({
 							root: {
 								width: '100%',
 							},
 							body: {
-								backgroundColor: theme.colors.dark[7],
+								backgroundColor: theme.colors.dark[8],
 							},
 							arrow: {
-								fill: theme.colors.dark[7],
+								fill: theme.colors.dark[8],
 							},
 						})}
-						size="xl"
 						transition="scale"
 						transitionDuration={200}
-						transitionTimingFunction="ease"
+						classNames={classes}
 					>
-						{heThongRapChieu.cumRapChieu.map((cumRapChieu) => (
-							<Menu.Item
-								key={cumRapChieu.maCumRap}
-								// icon={<Settings size={14} />}
-								component={Link}
-								to={`${heThongRapChieu.maHeThongRap}/${cumRapChieu.maCumRap}`}
-							>
-								{cumRapChieu.tenCumRap}
-							</Menu.Item>
-						))}
+						<Menu.Target>
+							<CinemaSelection
+								heThongRapChieu={heThongRapChieu}
+								handleOnClick={handleOnClick}
+							/>
+						</Menu.Target>
+
+						<Menu.Dropdown>
+							{heThongRapChieu.cumRapChieu.map((cumRapChieu) => (
+								<Menu.Item
+									key={cumRapChieu.maCumRap}
+									// icon={<Settings size={14} />}
+									component={Link}
+									to={`${heThongRapChieu.maHeThongRap}/${cumRapChieu.maCumRap}`}
+								>
+									{cumRapChieu.tenCumRap}
+								</Menu.Item>
+							))}
+						</Menu.Dropdown>
 					</Menu>
 				</div>
 			))}
