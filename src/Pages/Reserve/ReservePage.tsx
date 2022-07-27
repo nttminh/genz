@@ -12,10 +12,17 @@ import { Link } from 'react-router-dom';
 import BackButton from 'Components/BackButton';
 
 const useStyles = createStyles((theme) => ({
+	// dropdown: {
+	// 	borderColor: theme.colors.red[2],
+	// 	borderInlineColor: theme.colors.red[3],
+	// },
+	// arrow: {
+	// 	fill: theme.colors.red[2],
+	// },
 	item: {
+		backgroundColor: theme.colors.dark[7],
 		'&[data-hovered]': {
-			backgroundColor:
-				theme.colors[theme.primaryColor][theme.fn.primaryShade()],
+			backgroundColor: theme.colors.dark[6],
 			color: theme.white,
 		},
 	},

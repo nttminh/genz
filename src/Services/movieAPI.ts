@@ -1,4 +1,5 @@
 import Movie, { ShowTimes } from 'Interface/movie';
+import { SeatAvailabilitiesResponse } from 'Interface/seats';
 import axiosClient from './axiosClient';
 
 const movieAPI = {
@@ -23,6 +24,14 @@ const movieAPI = {
 			}
 		);
 	},
+	getSeatAvailabilities: (maLichChieu: string) => {
+		return axiosClient.get<SeatAvailabilitiesResponse>('QuanLyDatVe/LayDanhSachPhongVe', {
+			params: {
+				MaLichChieu: maLichChieu
+			}
+		})
+	}
+		
 	// Và những còn lại liên quan đến movie...
 };
 

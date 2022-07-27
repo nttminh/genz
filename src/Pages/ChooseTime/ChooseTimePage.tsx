@@ -5,6 +5,7 @@ import { formatDate } from 'Helpers/formatDate';
 import { CumRapChieu, HeThongRapChieu, LichChieuPhim } from 'Interface/movie';
 import React, { Key, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getMovieShowTimes } from 'Slices/cart';
 
@@ -75,8 +76,6 @@ const ChooseTimePage = (props: Props) => {
 				// onTabChange={setActiveTab}
 				variant="outline"
 				defaultValue={activeTab}
-				value={activeTab}
-				onTabChange={(value) => setActiveTab(value?.toString())}
 			>
 				<Tabs.List>
 					{rapDaChon?.lichChieuPhim &&
@@ -88,7 +87,7 @@ const ChooseTimePage = (props: Props) => {
 								return (
 									<Tabs.Tab
 										key={lich.ngayChieuGioChieu.toString()}
-										value={`${ngayChieuGioChieu.getDate()}/${ngayChieuGioChieu.getMonth()}`}
+										value={lich.ngayChieuGioChieu.toString()}
 									>
 										{ngayChieuGioChieu.getDate()}/
 										{ngayChieuGioChieu.getMonth() + 1}
@@ -105,16 +104,17 @@ const ChooseTimePage = (props: Props) => {
 						);
 						return (
 							<Tabs.Panel
-								key={
-									index === 0
-										? activeTab
-										: lich.ngayChieuGioChieu.toString()
-								}
-								value={`${ngayChieuGioChieu.getDate()}/${ngayChieuGioChieu.getMonth()}`}
+								key={lich.ngayChieuGioChieu.toString()}
+								value={lich.ngayChieuGioChieu.toString()}
 								pt="xs"
 							>
 								<Group>
-									<Button radius="sm" color="red">
+									<Button
+										radius="sm"
+										color="red"
+										component={Link}
+										to={lich.maLichChieu}
+									>
 										{ngayChieuGioChieu.toLocaleTimeString(
 											[],
 											{

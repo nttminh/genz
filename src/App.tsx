@@ -11,6 +11,7 @@ import ProtectedRoute from 'Routes/ProtectedRoute';
 import Detail from 'Pages/Detail/Detail';
 import ReservePage from 'Pages/Reserve/ReservePage';
 import ChooseTimePage from 'Pages/ChooseTime/ChooseTimePage';
+import SeatSelectPage from 'Pages/SeatSelect/SeatSelectPage';
 
 function App(): React.ReactElement {
 	return (
@@ -25,6 +26,10 @@ function App(): React.ReactElement {
 					<Route
 						path="/reserve/:id/:maHeThongRap/:maCumRap"
 						element={<ChooseTimePage />}
+					/>
+					<Route
+						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu"
+						element={<SeatSelectPage />}
 					/>
 					<Route
 						path="checkout"
