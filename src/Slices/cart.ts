@@ -4,17 +4,31 @@ import {
 	PayloadAction,
 	AsyncThunk,
 } from '@reduxjs/toolkit';
-import Movie, { ShowTimes } from 'Interface/movie';
+import Movie, {
+	CumRapChieu,
+	HeThongRapChieu,
+	LichChieuPhim,
+	ShowTimes,
+} from 'Interface/movie';
+import { DanhSachGhe } from 'Interface/seats';
 import movieAPI from '../Services/movieAPI';
 
 interface State {
 	movieShowTimes: ShowTimes | null;
+	heThongRapChieu: HeThongRapChieu | null;
+	rapDaChon: CumRapChieu | null;
+	lichDaChon: LichChieuPhim | null;
+	selectedSeats: DanhSachGhe[];
 	isLoading: boolean;
 	error: string | null;
 }
 
 const initialState: State = {
 	movieShowTimes: null,
+	heThongRapChieu: null,
+	rapDaChon: null,
+	lichDaChon: null,
+	selectedSeats: [],
 	isLoading: false,
 	error: null,
 };
@@ -37,6 +51,25 @@ const cartSlice = createSlice({
 		setMovie: (state, action: PayloadAction<ShowTimes>) => {
 			state.movieShowTimes = action.payload;
 		},
+		setRapDaChon: (state, action: PayloadAction<CumRapChieu>) => {
+			state.rapDaChon = action.payload;
+		},
+		setLichDaChon: (state, action: PayloadAction<LichChieuPhim>) => {
+			state.lichDaChon = action.payload;
+		},
+		setHeThongRapChieu: (state, action: PayloadAction<HeThongRapChieu>) => {
+			state.heThongRapChieu = action.payload;
+		},
+		toggleSeat: (state, action: PayloadAction<DanhSachGhe>) => {
+			const indexOfSeat = state.selectedSeats.findIndex(
+				(ghe) => action.payload.maGhe === ghe.maGhe
+			);
+			if (indexOfSeat > -1) {
+				state.selectedSeats.splice(indexOfSeat, 1);
+			} else {
+				state.selectedSeats.push(action.payload);
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getMovieShowTimes.pending, (state) => {
@@ -54,7 +87,13 @@ const cartSlice = createSlice({
 });
 
 // export actions
-export const { setMovie } = cartSlice.actions;
+export const {
+	setMovie,
+	toggleSeat,
+	setRapDaChon,
+	setHeThongRapChieu,
+	setLichDaChon,
+} = cartSlice.actions;
 
 // export reducer
 export default cartSlice.reducer;

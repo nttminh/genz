@@ -3,44 +3,37 @@ import { AppDispatch, RootState } from 'configStore';
 import { CumRapChieu, HeThongRapChieu } from 'Interface/movie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { getMovieShowTimes } from 'Slices/cart';
+import { useNavigate, useParams } from 'react-router-dom';
 import movieAPI from 'Services/movieAPI';
 import { SeatAvailabilitiesResponse } from 'Interface/seats';
 import Skeleton from 'react-loading-skeleton';
-import { Button, Checkbox, Group } from '@mantine/core';
-import { Armchair } from 'tabler-icons-react';
+import { Alert, Button, Checkbox, Group, Notification } from '@mantine/core';
+import { AlertCircle, Armchair, ShoppingCartX } from 'tabler-icons-react';
 import Seat from './Components/Seat';
+import {
+	getMovieShowTimes,
+	setHeThongRapChieu,
+	setRapDaChon,
+} from 'Slices/cart';
 
 type Props = {};
 
 const SeatSelectPage = (props: Props) => {
+	const navigate = useNavigate();
 	const { id, maHeThongRap, maCumRap, maLichChieu } = useParams();
-	const { movieShowTimes, isLoading, error } = useSelector(
-		(state: RootState) => state.cart
-	);
+	const {
+		movieShowTimes,
+		selectedSeats,
+		heThongRapChieu,
+		rapDaChon,
+		isLoading,
+		error,
+	} = useSelector((state: RootState) => state.cart);
 	const dispatch = useDispatch<AppDispatch>();
-	// const heThongRapChieu: HeThongRapChieu =
-	// 	movieShowTimes?.heThongRapChieu.find(
-	// 		(show) => show.maHeThongRap === maHeThongRap
-	// 	)!;
-
-	const [heThongRapChieu, setHeThongRapChieu] = useState(
-		movieShowTimes?.heThongRapChieu.find(
-			(show) => show.maHeThongRap === maHeThongRap
-		)!
-	);
-	// const rapDaChon: CumRapChieu = heThongRapChieu?.cumRapChieu.find(
-	// 	(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
-	// )!;
-	const [rapDaChon, setRapDaChon] = useState(
-		heThongRapChieu?.cumRapChieu.find(
-			(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
-		)!
-	);
-
 	const [seatResponse, setSeatResponse] =
 		useState<SeatAvailabilitiesResponse>();
+
+	const [isOneSeatExists, setIsOneSeatExists] = useState(true);
 
 	useEffect(() => {
 		if (!movieShowTimes) {
@@ -52,7 +45,30 @@ const SeatSelectPage = (props: Props) => {
 			setSeatResponse(data);
 		}
 		fetchData();
+
+		if (!rapDaChon) {
+			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
+				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
+			)!;
+			dispatch(setRapDaChon(tempRapDaChon));
+		}
+		if (!heThongRapChieu) {
+			let tempHeThongRapChieu = movieShowTimes?.heThongRapChieu.find(
+				(show) => show.maHeThongRap === maHeThongRap
+			)!;
+			dispatch(setHeThongRapChieu(tempHeThongRapChieu));
+		}
 	}, []);
+
+	const handleCheckout = () => {
+		if (selectedSeats.length) {
+			console.log(selectedSeats);
+			setIsOneSeatExists(true);
+			navigate('checkout');
+		} else {
+			setIsOneSeatExists(false);
+		}
+	};
 
 	return (
 		<div className="p-4">
@@ -77,11 +93,28 @@ const SeatSelectPage = (props: Props) => {
 						Array.from(Array(60).keys()).map((number: number) => (
 							<Skeleton key={number} width={46} height={40} />
 						))}
-					{seatResponse?.danhSachGhe.map((ghe) => (
+					{seatResponse?.danhSachGhe.slice(0, 90).map((ghe) => (
 						<Seat key={ghe.maGhe} ghe={ghe} />
 					))}
 				</>
 			</Group>
+			<Group mt={16} position="center">
+				<Button radius="sm" onClick={handleCheckout}>
+					Thanh toán
+				</Button>
+			</Group>
+
+			{!isOneSeatExists && (
+				<Alert
+					mt={16}
+					icon={<AlertCircle />}
+					withCloseButton
+					closeButtonLabel="Close alert"
+					radius="sm"
+				>
+					Bạn chưa chọn ghế nào
+				</Alert>
+			)}
 		</div>
 	);
 };

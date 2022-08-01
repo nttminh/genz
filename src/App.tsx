@@ -32,21 +32,14 @@ function App(): React.ReactElement {
 						element={<SeatSelectPage />}
 					/>
 					<Route
-						path="checkout"
-						element={
-							<ProtectedRoute>
-								<Checkout />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="reserve/:id"
+						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu/checkout"
 						element={
 							// <ProtectedRoute>
-							<ReservePage />
+							<Checkout />
 							// </ProtectedRoute>
 						}
 					/>
+					<Route path="reserve/:id" element={<ReservePage />} />
 					<Route index element={<HomePage />} />
 					<Route path="*" element={<Navigate to={''} />} />
 				</Route>

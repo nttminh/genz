@@ -2,29 +2,24 @@ import { Button, Group, Image, Tabs, TabsValue } from '@mantine/core';
 import BackButton from 'Components/BackButton';
 import { AppDispatch, RootState } from 'configStore';
 import { formatDate } from 'Helpers/formatDate';
-import { CumRapChieu, HeThongRapChieu, LichChieuPhim } from 'Interface/movie';
 import React, { Key, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getMovieShowTimes } from 'Slices/cart';
+import {
+	getMovieShowTimes,
+	setHeThongRapChieu,
+	setLichDaChon,
+	setRapDaChon,
+} from 'Slices/cart';
 
 type Props = {};
 
 const ChooseTimePage = (props: Props) => {
 	const { id, maHeThongRap, maCumRap } = useParams();
-	const { movieShowTimes, isLoading, error } = useSelector(
-		(state: RootState) => state.cart
-	);
+	const { movieShowTimes, rapDaChon, heThongRapChieu, isLoading, error } =
+		useSelector((state: RootState) => state.cart);
 	const dispatch = useDispatch<AppDispatch>();
-
-	const heThongRapChieu: HeThongRapChieu =
-		movieShowTimes?.heThongRapChieu.find(
-			(show) => show.maHeThongRap === maHeThongRap
-		)!;
-	const rapDaChon: CumRapChieu = heThongRapChieu?.cumRapChieu.find(
-		(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
-	)!;
 
 	const [activeTab, setActiveTab] = useState(() => {
 		if (rapDaChon) {
@@ -32,17 +27,24 @@ const ChooseTimePage = (props: Props) => {
 		}
 	});
 
-	// const onChange = (active: number, tabKey: string) => {
-	// 	setActiveTab(active);
-	// 	console.log('tabKey', tabKey);
-	// };
-
 	useEffect(() => {
 		if (!movieShowTimes) {
 			dispatch(getMovieShowTimes(id!));
 		}
+		if (!rapDaChon) {
+			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
+				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
+			)!;
+			dispatch(setRapDaChon(tempRapDaChon));
+		}
+		if (!heThongRapChieu) {
+			let tempHeThongRapChieu = movieShowTimes?.heThongRapChieu.find(
+				(show) => show.maHeThongRap === maHeThongRap
+			)!;
+			dispatch(setHeThongRapChieu(tempHeThongRapChieu));
+		}
 	}, []);
-	// console.log(movieShowTimes);
+
 	console.log(rapDaChon);
 	if (!rapDaChon) {
 		return <></>;
@@ -114,6 +116,9 @@ const ChooseTimePage = (props: Props) => {
 										color="red"
 										component={Link}
 										to={lich.maLichChieu}
+										onClick={() =>
+											dispatch(setLichDaChon(lich))
+										}
 									>
 										{ngayChieuGioChieu.toLocaleTimeString(
 											[],

@@ -1,7 +1,10 @@
 import { Button, Checkbox, CheckboxProps } from '@mantine/core';
+import { AppDispatch } from 'configStore';
 import { DanhSachGhe } from 'Interface/seats';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Armchair, Wheelchair } from 'tabler-icons-react';
+import { toggleSeat } from 'Slices/cart';
 
 type Props = {
 	ghe: DanhSachGhe;
@@ -15,6 +18,7 @@ const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, className }) =>
 	);
 
 const Seat = ({ ghe }: Props) => {
+	const dispatch = useDispatch<AppDispatch>();
 	const [checked, setChecked] = useState(false);
 	return (
 		// <Checkbox
@@ -32,11 +36,13 @@ const Seat = ({ ghe }: Props) => {
 			disabled={ghe.daDat}
 			onClick={() => {
 				setChecked(!checked);
+				dispatch(toggleSeat(ghe));
 			}}
 			styles={(theme) => ({
 				root: {
+					color: checked ? '#000' : '#fff',
 					backgroundColor: checked
-						? theme.fn.darken(theme.colors.orange[6], 0.05)
+						? theme.fn.darken('#fff', 0.05)
 						: theme.colors.primaryColor,
 					'&:disabled': {
 						backgroundColor: theme.fn.darken('#e03131', 0.75),
