@@ -26,16 +26,9 @@ const ChooseTimePage = (props: Props) => {
 			return rapDaChon.lichChieuPhim.at(0)?.ngayChieuGioChieu.toString();
 		}
 	});
-
 	useEffect(() => {
 		if (!movieShowTimes) {
 			dispatch(getMovieShowTimes(id!));
-		}
-		if (!rapDaChon) {
-			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
-				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
-			)!;
-			dispatch(setRapDaChon(tempRapDaChon));
 		}
 		if (!heThongRapChieu) {
 			let tempHeThongRapChieu = movieShowTimes?.heThongRapChieu.find(
@@ -43,7 +36,13 @@ const ChooseTimePage = (props: Props) => {
 			)!;
 			dispatch(setHeThongRapChieu(tempHeThongRapChieu));
 		}
-	}, []);
+		if (!rapDaChon) {
+			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
+				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
+			)!;
+			dispatch(setRapDaChon(tempRapDaChon));
+		}
+	}, [movieShowTimes, heThongRapChieu, rapDaChon]);
 
 	console.log(rapDaChon);
 	if (!rapDaChon) {

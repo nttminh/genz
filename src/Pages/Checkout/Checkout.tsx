@@ -1,6 +1,7 @@
 import { Group, Image } from '@mantine/core';
 import BackButton from 'Components/BackButton';
 import { AppDispatch, RootState } from 'configStore';
+import { formatCurrency } from 'Helpers/formatCurrency';
 import { formatDate } from 'Helpers/formatDate';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,15 +25,11 @@ const Checkout = () => {
 		isLoading,
 		error,
 	} = useSelector((state: RootState) => state.cart);
+
+	console.log(rapDaChon, lichDaChon, selectedSeats);
 	useEffect(() => {
 		if (!movieShowTimes) {
 			dispatch(getMovieShowTimes(id!));
-		}
-		if (!rapDaChon) {
-			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
-				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
-			)!;
-			dispatch(setRapDaChon(tempRapDaChon));
 		}
 		if (!heThongRapChieu) {
 			let tempHeThongRapChieu = movieShowTimes?.heThongRapChieu.find(
@@ -40,14 +37,21 @@ const Checkout = () => {
 			)!;
 			dispatch(setHeThongRapChieu(tempHeThongRapChieu));
 		}
+		if (!rapDaChon) {
+			let tempRapDaChon = heThongRapChieu?.cumRapChieu.find(
+				(cumRapChieu) => cumRapChieu.maCumRap === maCumRap
+			)!;
+			dispatch(setRapDaChon(tempRapDaChon));
+		}
 		if (!lichDaChon) {
 			let tempLichDaChon = rapDaChon?.lichChieuPhim.find(
 				(lich) => lich.maLichChieu === maLichChieu
 			)!;
 			dispatch(setLichDaChon(tempLichDaChon));
 		}
-	}, []);
-	console.log(lichDaChon);
+	}, [movieShowTimes, heThongRapChieu, rapDaChon, lichDaChon]);
+
+	const gioChieu = new Date(lichDaChon?.ngayChieuGioChieu!);
 	return (
 		<div className="p-4">
 			<BackButton />
@@ -63,11 +67,9 @@ const Checkout = () => {
 				</div>
 				<div>
 					<h2>{movieShowTimes?.tenPhim}</h2>
-					<p>{rapDaChon?.tenCumRap}</p>
+					<p>{rapDaChon && rapDaChon?.tenCumRap}</p>
 					<p>
-						{new Date(
-							lichDaChon?.ngayChieuGioChieu!
-						).toLocaleTimeString([], {
+						{gioChieu.toLocaleTimeString([], {
 							hour: '2-digit',
 							minute: '2-digit',
 							hour12: false,
@@ -75,6 +77,25 @@ const Checkout = () => {
 							month: 'short',
 						})}
 					</p>
+					<div className="mt-4">
+						{[...selectedSeats]
+							.sort((a, b) => +a.stt - +b.stt)
+							.map((seat) => (
+								<p key={seat.maGhe}>
+									Ghế {seat.tenGhe} ({seat.loaiGhe}):{' '}
+									{formatCurrency(seat.giaVe)}
+								</p>
+							))}
+						<p className="mt-4">
+							Tổng:{' '}
+							{formatCurrency(
+								[...selectedSeats].reduce(
+									(acc, curr) => (acc += curr.giaVe),
+									0
+								)
+							)}
+						</p>
+					</div>
 				</div>
 			</Group>
 		</div>

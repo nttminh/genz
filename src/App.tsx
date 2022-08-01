@@ -34,9 +34,9 @@ function App(): React.ReactElement {
 					<Route
 						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu/checkout"
 						element={
-							// <ProtectedRoute>
-							<Checkout />
-							// </ProtectedRoute>
+							<ProtectedRoute>
+								<Checkout />
+							</ProtectedRoute>
 						}
 					/>
 					<Route path="reserve/:id" element={<ReservePage />} />

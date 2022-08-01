@@ -5,6 +5,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.3",
     "@mantine/core": "^5.0.0",
+    "@mantine/form": "^5.0.2",
     "@mantine/hooks": "^5.0.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@tailwindcss/line-clamp": "^0.4.0",

@@ -48,17 +48,26 @@ const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		setMovie: (state, action: PayloadAction<ShowTimes>) => {
+		setMovie: (state, action: PayloadAction<ShowTimes | null>) => {
 			state.movieShowTimes = action.payload;
 		},
-		setRapDaChon: (state, action: PayloadAction<CumRapChieu>) => {
+		setRapDaChon: (state, action: PayloadAction<CumRapChieu | null>) => {
 			state.rapDaChon = action.payload;
 		},
-		setLichDaChon: (state, action: PayloadAction<LichChieuPhim>) => {
+		setLichDaChon: (state, action: PayloadAction<LichChieuPhim | null>) => {
 			state.lichDaChon = action.payload;
 		},
-		setHeThongRapChieu: (state, action: PayloadAction<HeThongRapChieu>) => {
+		setHeThongRapChieu: (
+			state,
+			action: PayloadAction<HeThongRapChieu | null>
+		) => {
 			state.heThongRapChieu = action.payload;
+		},
+		setSelectedSeats: (
+			state,
+			action: PayloadAction<DanhSachGhe[] | []>
+		) => {
+			state.selectedSeats = action.payload;
 		},
 		toggleSeat: (state, action: PayloadAction<DanhSachGhe>) => {
 			const indexOfSeat = state.selectedSeats.findIndex(
@@ -93,6 +102,7 @@ export const {
 	setRapDaChon,
 	setHeThongRapChieu,
 	setLichDaChon,
+	setSelectedSeats,
 } = cartSlice.actions;
 
 // export reducer

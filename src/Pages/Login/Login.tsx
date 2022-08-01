@@ -1,6 +1,16 @@
 // Một số thư viện làm việc với form trong React: formik, react-final-form, react-hook-form
 
-import { useForm, FieldErrors } from 'react-hook-form';
+import {
+	Button,
+	Code,
+	Group,
+	PasswordInput,
+	Stepper,
+	TextInput,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useState } from 'react';
+import { FieldErrors } from 'react-hook-form';
 
 interface LoginValues {
 	taiKhoan: string;
@@ -8,73 +18,122 @@ interface LoginValues {
 }
 
 const Login = () => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<LoginValues>({
-		// defaultValues: Khai báo giá trị mặc định cho các input trong form
-		defaultValues: {
-			taiKhoan: '',
-			matKhau: '',
+	const [active, setActive] = useState(0);
+
+	const form = useForm({
+		initialValues: {
+			username: '',
+			password: '',
+			name: '',
+			email: '',
+			website: '',
+			github: '',
 		},
-		// mode: cách validation được trigger (default là submit)
-		mode: 'onTouched',
+
+		validate: (values) => {
+			if (active === 0) {
+				return {
+					username:
+						values.username.trim().length < 6
+							? 'Username must include at least 6 characters'
+							: null,
+					password:
+						values.password.length < 6
+							? 'Password must include at least 6 characters'
+							: null,
+				};
+			}
+
+			if (active === 1) {
+				return {
+					name:
+						values.name.trim().length < 2
+							? 'Name must include at least 2 characters'
+							: null,
+					email: /^\S+@\S+$/.test(values.email)
+						? null
+						: 'Invalid email',
+				};
+			}
+
+			return {};
+		},
 	});
 
-	const onSubmit = (values: LoginValues) => {
-		console.log(values);
-	};
+	const nextStep = () =>
+		setActive((current) => {
+			if (form.validate().hasErrors) {
+				return current;
+			}
+			return current < 3 ? current + 1 : current;
+		});
 
-	const onError = (error: FieldErrors<LoginValues>) => {
-		console.log(error);
-	};
+	const prevStep = () =>
+		setActive((current) => (current > 0 ? current - 1 : current));
 
 	return (
-		<div>
-			<h1>Login</h1>
-			<form onSubmit={handleSubmit(onSubmit, onError)}>
-				<div>
-					<label>Tài Khoản</label>
-					<input
-						type="text"
-						{...register('taiKhoan', {
-							// validations
-							required: {
-								value: true,
-								message: 'Tài khoản không được để trống',
-							},
-							pattern: {
-								value: /^[a-zA-Z0-9]{5,}$/,
-								message:
-									'Tài khoản bao gồm các kí tự hoa, thường, số và ít nhất 5 kí tự',
-							},
-						})}
+		<div className="p-4 md:w-1/2 mx-auto">
+			<Stepper active={active} breakpoint="sm">
+				<Stepper.Step label="First step" description="Profile settings">
+					<TextInput
+						label="Username"
+						placeholder="Username"
+						{...form.getInputProps('username')}
 					/>
-					{/* {errors.taiKhoan?.type === 'required' && <span>Tài khoản không được để trống</span>}
-          {errors.taiKhoan?.type === 'pattern' && <span>Tài khoản gồm các kí tự hoa thường, số và ít nhất 5 kí tự</span>} */}
-					{errors.taiKhoan && <span>{errors.taiKhoan?.message}</span>}
-				</div>
-				<div>
-					<label>Mật Khẩu</label>
-					<input
-						type="text"
-						{...register('matKhau', {
-							required: {
-								value: true,
-								message: 'Mật khẩu không được để trống',
-							},
-							pattern: {
-								value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-								message:
-									'Mật khẩu ít nhất một chữ cái, một số và ít nhất 8 kí tự',
-							},
-						})}
+					<PasswordInput
+						mt="md"
+						label="Password"
+						placeholder="Password"
+						{...form.getInputProps('password')}
 					/>
-					{errors.matKhau && <span>{errors.matKhau?.message}</span>}
-				</div>
-				<button>Đăng Nhập</button>
-			</form>
+				</Stepper.Step>
+
+				<Stepper.Step
+					label="Second step"
+					description="Personal information"
+				>
+					<TextInput
+						label="Name"
+						placeholder="Name"
+						{...form.getInputProps('name')}
+					/>
+					<TextInput
+						mt="md"
+						label="Email"
+						placeholder="Email"
+						{...form.getInputProps('email')}
+					/>
+				</Stepper.Step>
+
+				<Stepper.Step label="Final step" description="Social media">
+					<TextInput
+						label="Website"
+						placeholder="Website"
+						{...form.getInputProps('website')}
+					/>
+					<TextInput
+						mt="md"
+						label="GitHub"
+						placeholder="GitHub"
+						{...form.getInputProps('github')}
+					/>
+				</Stepper.Step>
+				<Stepper.Completed>
+					Completed! Form values:
+					<Code block mt="xl">
+						{JSON.stringify(form.values, null, 2)}
+					</Code>
+				</Stepper.Completed>
+			</Stepper>
+
+			<Group position="right" mt="xl">
+				{active !== 0 && (
+					<Button variant="default" onClick={prevStep}>
+						Back
+					</Button>
+				)}
+				{active !== 3 && <Button onClick={nextStep}>Next step</Button>}
+			</Group>
 		</div>
 	);
 };
