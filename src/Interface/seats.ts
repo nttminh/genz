@@ -12,6 +12,7 @@ export interface DanhSachGhe {
 	giaVe: number;
 	daDat: boolean;
 	taiKhoanNguoiDat: string | null;
+	isLocallySelected?: boolean;
 }
 
 export enum LoaiGhe {

@@ -19,7 +19,12 @@ const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, className }) =>
 
 const Seat = ({ ghe }: Props) => {
 	const dispatch = useDispatch<AppDispatch>();
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(() => {
+		if (ghe.isLocallySelected) {
+			return true;
+		}
+		return false;
+	});
 	return (
 		// <Checkbox
 		// 	icon={CheckboxIcon}

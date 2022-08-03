@@ -42,6 +42,20 @@ const SeatSelectPage = (props: Props) => {
 
 		async function fetchData() {
 			const data = await movieAPI.getSeatAvailabilities(maLichChieu!);
+			let tempSelectedSeats: number[] = [];
+			if (selectedSeats.length !== 0) {
+				for (let i = 0; i < selectedSeats.length; i++) {
+					const element = selectedSeats[i];
+					tempSelectedSeats = [...tempSelectedSeats, element.maGhe];
+				}
+			}
+			data.danhSachGhe = data.danhSachGhe.map((seat) => {
+				if (tempSelectedSeats.includes(seat.maGhe)) {
+					seat.isLocallySelected = true;
+				}
+				return seat;
+			});
+
 			setSeatResponse(data);
 		}
 		fetchData();

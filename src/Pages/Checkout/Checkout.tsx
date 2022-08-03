@@ -69,6 +69,7 @@ const Checkout = () => {
 					<h2>{movieShowTimes?.tenPhim}</h2>
 					<p>{rapDaChon && rapDaChon?.tenCumRap}</p>
 					<p>
+						{lichDaChon?.tenRap}, vào lúc{' '}
 						{gioChieu.toLocaleTimeString([], {
 							hour: '2-digit',
 							minute: '2-digit',
@@ -77,7 +78,7 @@ const Checkout = () => {
 							month: 'short',
 						})}
 					</p>
-					<div className="mt-4">
+					<div className="mt-4 border-y py-2">
 						{[...selectedSeats]
 							.sort((a, b) => +a.stt - +b.stt)
 							.map((seat) => (
@@ -86,16 +87,16 @@ const Checkout = () => {
 									{formatCurrency(seat.giaVe)}
 								</p>
 							))}
-						<p className="mt-4">
-							Tổng:{' '}
-							{formatCurrency(
-								[...selectedSeats].reduce(
-									(acc, curr) => (acc += curr.giaVe),
-									0
-								)
-							)}
-						</p>
 					</div>
+					<p className="mt-4">
+						Tổng:{' '}
+						{formatCurrency(
+							[...selectedSeats].reduce(
+								(acc, curr) => (acc += curr.giaVe),
+								0
+							)
+						)}
+					</p>
 				</div>
 			</Group>
 		</div>
