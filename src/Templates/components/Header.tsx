@@ -1,16 +1,32 @@
+import { AppDispatch, RootState } from 'configStore';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { logout } from 'Slices/auth';
 
 type Props = {
 	horizontal?: boolean;
 };
 
 const Header = () => {
+	const dispatch = useDispatch<AppDispatch>();
+	const { user, error } = useSelector((state: RootState) => state.auth);
 	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const handleToggleOpen = () => {
 		setIsOpen((prev) => !prev);
+	};
+
+	const handleLogin = () => {
+		navigate('/login');
+		setIsOpen(false);
+	};
+
+	const handleLogout = () => {
+		dispatch(logout());
+		setIsOpen(false);
 	};
 
 	return (
@@ -84,30 +100,29 @@ const Header = () => {
 										isActive ? 'text-red-700' : 'text-white'
 									} font-medium px-2 py-2`
 								}
-								to="login"
-							>
-								Login
-							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								className={({ isActive }) =>
-									`text-sm ${
-										isActive ? 'text-red-700' : 'text-white'
-									} font-medium px-2 py-2`
-								}
 								to="register"
 							>
 								Register
 							</NavLink>
 						</li>
 					</ul>
-					<button
-						className="hidden lg:inline-block py-2 px-8 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold 
+					{Object.keys(user).length === 0 ? (
+						<button
+							className="hidden lg:inline-block py-2 px-8 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold 
     transform active:scale-75 transition-transform duration-700 focus:outline-none"
-					>
-						Log In
-					</button>
+							onClick={handleLogin}
+						>
+							Đăng nhập
+						</button>
+					) : (
+						<button
+							className="hidden lg:inline-block py-2 px-8 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold 
+    transform active:scale-75 transition-transform duration-700 focus:outline-none"
+							onClick={handleLogout}
+						>
+							Đăng xuất
+						</button>
+					)}
 				</nav>
 				<div
 					className={`navbar-menu relative z-50 ${
@@ -202,22 +217,6 @@ const Header = () => {
 													: 'text-gray-500'
 											} group-hover:text-red-600`
 										}
-										to="/login"
-										onClick={handleToggleOpen}
-									>
-										Login
-									</NavLink>
-								</li>
-								<li className="mb-1 inline-flex group rounded w-full">
-									<div className="flex w-1 group-hover:bg-red-800 scale-y-0 group-hover:scale-100 transition-transform origin-top rounded-full duration-400 ease-in"></div>
-									<NavLink
-										className={({ isActive }) =>
-											`flex w-full p-4 text-sm font-semibold ${
-												isActive
-													? 'text-red-600'
-													: 'text-gray-500'
-											} group-hover:text-red-600`
-										}
 										to="/register"
 										onClick={handleToggleOpen}
 									>
@@ -228,9 +227,21 @@ const Header = () => {
 						</div>
 						<div className="mt-auto">
 							<div className="pt-6">
-								<button className="w-full py-3 px-4 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold  hover:shadow-md transform transition-transform duration-700 focus:outline-none">
-									Log In
-								</button>
+								{Object.keys(user).length === 0 ? (
+									<button
+										className="w-full py-3 px-4 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold  hover:shadow-md transform transition-transform duration-700 focus:outline-none"
+										onClick={handleLogin}
+									>
+										Đăng nhập
+									</button>
+								) : (
+									<button
+										className="w-full py-3 px-4 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold  hover:shadow-md transform transition-transform duration-700 focus:outline-none"
+										onClick={handleLogout}
+									>
+										Đăng xuất
+									</button>
+								)}
 							</div>
 						</div>
 					</nav>

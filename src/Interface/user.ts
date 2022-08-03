@@ -11,3 +11,7 @@ export interface DangNhapParams {
 	taiKhoan: string;
 	matKhau: string;
 }
+
+export interface DangNhapResponse {
+
+}

@@ -1,22 +1,24 @@
-import { RootState } from "configStore";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { RootState } from 'configStore';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 interface Props {
-  children: JSX.Element;
+	children: JSX.Element;
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-  // Kiểm tra xem user đã đăng nhập hay chưa
-  const { user } = useSelector((state: RootState) => state.auth);
+	// Kiểm tra xem user đã đăng nhập hay chưa
+	const { user } = useSelector((state: RootState) => state.auth);
 
-  if (!user) {
-    // Chưa đăng nhập
-    return <Navigate to="/login" />;
-  }
+	const isEmpty = Object.keys(user).length === 0;
 
-  // Đã đăng nhập
-  return children;
+	if (isEmpty) {
+		// Chưa đăng nhập
+		return <Navigate to="/login" />;
+	}
+
+	// Đã đăng nhập
+	return children;
 };
 
 export default ProtectedRoute;

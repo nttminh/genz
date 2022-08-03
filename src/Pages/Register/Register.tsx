@@ -104,14 +104,20 @@ const Register = () => {
 		setActive((current) => (current > 0 ? current - 1 : current));
 
 	const handleRegister = async () => {
-		console.log(form.values);
 		try {
 			const data = await userAPI.register(form.values);
-			setResponse(data);
-			setIsRegisterSuccess(true);
-			console.log(data);
-		} catch (error: any) {
-			setError(error);
+			console.log(typeof data);
+			if (typeof data === 'string') {
+				setError(data);
+				setResponse(null);
+			}
+			if (typeof data === 'object') {
+				setResponse(data);
+				setError('');
+				setIsRegisterSuccess(true);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -154,12 +160,20 @@ const Register = () => {
 					/>
 				</Stepper.Step>
 				<Stepper.Completed>
-					Đăng kí thành công, bạn có thể đăng nhập với tài khoản
-					<Code block mt="xl">
-						{JSON.stringify(form.values, null, 2)}
-					</Code>
-					{response && <p>{response?.taiKhoan}</p>}
-					{error && <p>{error}</p>}
+					{error && (
+						<div>
+							<h2>{error} Vui lòng chỉnh sửa lại thông tin</h2>
+						</div>
+					)}
+					{response && (
+						<div className="text-center">
+							<h2 className="mb-4">
+								Đăng kí thành công, sử dụng tài khoản bên dưới
+								để đăng nhập
+							</h2>
+							<Code p={8}>{response?.taiKhoan}</Code>
+						</div>
+					)}
 				</Stepper.Completed>
 			</Stepper>
 
@@ -169,7 +183,7 @@ const Register = () => {
 						Back
 					</Button>
 				)}
-				{!isRegisterSuccess && active !== 2 && (
+				{!isRegisterSuccess && active < 2 && (
 					<Button onClick={nextStep}>Next step</Button>
 				)}
 				{!isRegisterSuccess && active === 2 && (

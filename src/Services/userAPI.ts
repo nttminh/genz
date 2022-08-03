@@ -3,12 +3,15 @@ import axiosClient from './axiosClient';
 
 const userAPI = {
 	register: (registerInfo: DangKiParams) => {
-		return axiosClient.post<DangKiParams>('QuanLyNguoiDung/DangKy', {
-			...registerInfo,
-		});
+		return axiosClient.post<DangKiParams | string>(
+			'QuanLyNguoiDung/DangKy',
+			{
+				...registerInfo,
+			}
+		);
 	},
 	login: (loginInfo: DangNhapParams) => {
-		return axiosClient.post<DangNhapParams>(
+		return axiosClient.post<DangNhapParams | string>(
 			'QuanLyNguoiDung/DangNhap',
 			loginInfo
 		);

@@ -12,11 +12,11 @@ const MovieImage = ({ movie }: Props) => {
 	return (
 		<>
 			{isLoading && (
-				<Skeleton className="h-full mx-auto rounded-md transition duration-300 group-hover:scale-75" />
+				<Skeleton className="h-full mx-auto rounded-md transition duration-300 md:group-hover:scale-75" />
 			)}
 			{movie && (
 				<img
-					className="h-full mx-auto object-cover object-center rounded-md transition duration-300 group-hover:scale-75"
+					className="h-full mx-auto object-cover object-center rounded-md transition duration-300 md:group-hover:scale-75"
 					style={{ display: `${isLoading ? 'none' : 'block'}` }}
 					onLoad={() => {
 						setIsLoading(false);
