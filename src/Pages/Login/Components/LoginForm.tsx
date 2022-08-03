@@ -38,6 +38,12 @@ const LoginForm = ({
 					Đăng nhập
 				</Button>
 				<Link
+					to="/register"
+					className="block mt-4 text-sm brightness-75"
+				>
+					Đăng ký
+				</Link>
+				<Link
 					to="#"
 					className="block mt-4 text-sm brightness-75"
 					onClick={() => setIsForgotPassword(true)}

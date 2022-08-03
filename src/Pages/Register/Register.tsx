@@ -14,6 +14,10 @@ import { useState } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import userAPI from 'Services/userAPI';
 import { DangKiParams } from 'Interface/user';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'configStore';
+import { login } from 'Slices/auth';
+import { useNavigate } from 'react-router-dom';
 
 // Register fields: taiKhoan, matKhau, email, hoTen, soDt
 
@@ -47,6 +51,8 @@ interface RegisterValues {
 }
 
 const Register = () => {
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
 	const [active, setActive] = useState(0);
 	const [response, setResponse] = useState<DangKiParams | null>(null);
 	const [error, setError] = useState('');
@@ -115,6 +121,12 @@ const Register = () => {
 				setResponse(data);
 				setError('');
 				setIsRegisterSuccess(true);
+				console.log(data);
+				const loginCredentials = {
+					taiKhoan: data.taiKhoan,
+					matKhau: data.matKhau,
+				};
+				dispatch(login(loginCredentials));
 			}
 		} catch (error) {
 			console.log(error);
@@ -168,10 +180,17 @@ const Register = () => {
 					{response && (
 						<div className="text-center">
 							<h2 className="mb-4">
-								Đăng kí thành công, sử dụng tài khoản bên dưới
-								để đăng nhập
+								Đăng kí thành công, tài khoản của bạn là
 							</h2>
 							<Code p={8}>{response?.taiKhoan}</Code>
+							<div className="mt-4">
+								<Button
+									onClick={() => navigate(-1)}
+									radius="sm"
+								>
+									Tiếp tục
+								</Button>
+							</div>
 						</div>
 					)}
 				</Stepper.Completed>
