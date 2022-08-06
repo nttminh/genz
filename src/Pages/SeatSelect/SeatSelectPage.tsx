@@ -114,7 +114,7 @@ const SeatSelectPage = (props: Props) => {
 			</Group>
 			<Group mt={16} position="center">
 				<Button radius="sm" onClick={handleCheckout}>
-					Thanh toán
+					Đến giỏ hàng
 				</Button>
 			</Group>
 

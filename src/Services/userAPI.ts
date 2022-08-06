@@ -11,7 +11,7 @@ const userAPI = {
 		);
 	},
 	login: (loginInfo: DangNhapParams) => {
-		return axiosClient.post<DangNhapParams | string>(
+		return axiosClient.post<DangKiParams | string>(
 			'QuanLyNguoiDung/DangNhap',
 			loginInfo
 		);

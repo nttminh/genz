@@ -12,6 +12,7 @@ import Detail from 'Pages/Detail/Detail';
 import ReservePage from 'Pages/Reserve/ReservePage';
 import ChooseTimePage from 'Pages/ChooseTime/ChooseTimePage';
 import SeatSelectPage from 'Pages/SeatSelect/SeatSelectPage';
+import Finish from 'Pages/Finish/Finish';
 
 function App(): React.ReactElement {
 	return (
@@ -36,6 +37,14 @@ function App(): React.ReactElement {
 						element={
 							<ProtectedRoute>
 								<Checkout />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu/checkout/finish"
+						element={
+							<ProtectedRoute>
+								<Finish />
 							</ProtectedRoute>
 						}
 					/>

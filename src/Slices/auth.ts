@@ -1,8 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { DangNhapParams } from 'Interface/user';
+import { DangKiParams, DangNhapParams } from 'Interface/user';
 import userAPI from 'Services/userAPI';
 
-const initialState = {
+interface State {
+	user: DangKiParams | {};
+	error: string;
+}
+
+const initialState: State = {
 	user: {},
 	error: '',
 };
@@ -26,6 +31,7 @@ const authSlice = createSlice({
 	reducers: {
 		logout: (state) => {
 			state.user = {};
+			localStorage.clear();
 		},
 	},
 	extraReducers: (builder) => {
@@ -36,6 +42,10 @@ const authSlice = createSlice({
 			} else {
 				state.user = payload;
 				state.error = '';
+				localStorage.setItem(
+					'access_token',
+					{ ...state.user }.accessToken!
+				);
 			}
 		});
 	},

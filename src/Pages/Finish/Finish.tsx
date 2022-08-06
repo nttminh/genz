@@ -1,22 +1,20 @@
-import { Button, Group, Image, Radio } from '@mantine/core';
-import BackButton from 'Components/BackButton';
+import { Group, Image } from '@mantine/core';
 import { AppDispatch, RootState } from 'configStore';
 import { formatCurrency } from 'Helpers/formatCurrency';
-import { formatDate } from 'Helpers/formatDate';
-import { DanhSachVe, DatVeBody } from 'Interface/cart';
-import { DanhSachGhe } from 'Interface/seats';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import cartAPI from 'Services/cartAPI';
 import {
 	getMovieShowTimes,
 	setHeThongRapChieu,
 	setLichDaChon,
 	setRapDaChon,
 } from 'Slices/cart';
+import { CircleCheck } from 'tabler-icons-react';
 
-const Checkout = () => {
+type Props = {};
+
+const Finish = (props: Props) => {
 	const { id, maHeThongRap, maCumRap, maLichChieu } = useParams();
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
@@ -54,27 +52,17 @@ const Checkout = () => {
 			dispatch(setLichDaChon(tempLichDaChon));
 		}
 	}, [movieShowTimes, heThongRapChieu, rapDaChon, lichDaChon]);
-
-	const handleCheckout = async () => {
-		if (maLichChieu) {
-			const datVeBody: DatVeBody = {
-				maLichChieu,
-				danhSachVe: selectedSeats.map(function (seat) {
-					return { maGhe: seat.maGhe, giaVe: seat.giaVe };
-				}),
-			};
-			const data = await cartAPI.checkout(datVeBody);
-			console.log(data);
-			navigate('finish');
-		}
-	};
-
 	const gioChieu = new Date(lichDaChon?.ngayChieuGioChieu!);
 	return (
-		<div className="p-4">
-			<BackButton />
-			<h1>Thanh toán</h1>
-			<hr />
+		<div className="p-4 text-center">
+			<CircleCheck
+				size={72}
+				strokeWidth={2}
+				color="red"
+				className="mx-auto"
+			/>
+			<h1>Cảm ơn bạn đã đặt vé!</h1>
+			<hr className="w-1/2 mx-auto my-2" />
 			<Group mt={16} position="center">
 				<div className=" md:w-40">
 					<Image
@@ -119,25 +107,9 @@ const Checkout = () => {
 						)}
 						{selectedSeats.length === 0 && <span>0 VND</span>}
 					</p>
-					<Radio.Group
-						label="Hình thức thanh toán"
-						required
-						defaultChecked
-						defaultValue="at-store"
-					>
-						<Radio
-							checked
-							value="at-store"
-							label="Thanh toán tại quầy"
-						/>
-						<Radio
-							value="card"
-							label="VISA/MASTERCARD (đang bảo trì)"
-							disabled
-						/>
-					</Radio.Group>
+
 					<div className="my-4 text-center">
-						<Button onClick={handleCheckout}>Thanh toán</Button>
+						{/* <Button onClick={handleCheckout}>Thanh toán</Button> */}
 					</div>
 				</div>
 			</Group>
@@ -145,4 +117,4 @@ const Checkout = () => {
 	);
 };
 
-export default Checkout;
+export default Finish;

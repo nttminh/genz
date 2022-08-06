@@ -5,6 +5,7 @@ export interface DangKiParams {
 	soDt: string;
 	maNhom: string;
 	hoTen: string;
+	accessToken?: string;
 }
 
 export interface DangNhapParams {
@@ -12,6 +13,4 @@ export interface DangNhapParams {
 	matKhau: string;
 }
 
-export interface DangNhapResponse {
-
-}
+export interface DangNhapResponse {}

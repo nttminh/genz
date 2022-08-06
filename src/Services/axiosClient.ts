@@ -6,6 +6,11 @@ const axiosClient = axios.create({
 	headers: {
 		TokenCybersoft:
 			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJGcm9udCBFbmQgNzEiLCJIZXRIYW5TdHJpbmciOiIyOS8xMi8yMDIyIiwiSGV0SGFuVGltZSI6IjE2NzIyNzIwMDAwMDAiLCJuYmYiOjE2NDU5ODEyMDAsImV4cCI6MTY3MjQxOTYwMH0.SZe3CJl1OkNH-0zfzqOV0CSC8WZ6q2hw64UykpCytT0',
+		Authorization: `Bearer ${
+			typeof window !== 'undefined'
+				? localStorage.getItem('access_token')
+				: ''
+		}`,
 	},
 });
 
@@ -18,7 +23,11 @@ axiosClient.interceptors.request.use((config) => {
 	// config là nội dung của request
 	// ta có thể thay đổi nội dung của request trước khi nó được gửi lên server
 	if (config.headers) {
-		config.headers.demo = 'FE71';
+		config.headers.Authorization = `Bearer ${
+			typeof window !== 'undefined'
+				? localStorage.getItem('access_token')
+				: ''
+		}`;
 	}
 
 	return config;
