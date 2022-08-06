@@ -24,11 +24,14 @@ const Footer = (props: Props) => {
 				</Link>
 				<ul className="flex flex-wrap justify-center items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
 					<li>
-						<Link to="#" className="mr-4 hover:underline md:mr-6 ">
+						<a
+							href="https://github.com/nttminh/genz#readme"
+							className="mr-4 hover:underline md:mr-6 "
+						>
 							About
-						</Link>
+						</a>
 					</li>
-					<li>
+					{/* <li>
 						<Link to="#" className="mr-4 hover:underline md:mr-6">
 							Privacy Policy
 						</Link>
@@ -37,11 +40,14 @@ const Footer = (props: Props) => {
 						<Link to="#" className="mr-4 hover:underline md:mr-6 ">
 							Licensing
 						</Link>
-					</li>
+					</li> */}
 					<li>
-						<Link to="#" className="hover:underline">
+						<a
+							href="https://www.facebook.com/profile.php?id=100010410335268"
+							className="hover:underline"
+						>
 							Contact
-						</Link>
+						</a>
 					</li>
 				</ul>
 			</div>

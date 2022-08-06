@@ -81,30 +81,18 @@ const Header = () => {
 								Home
 							</NavLink>
 						</li>
-						<li>
+						{/* <li>
 							<NavLink
 								className={({ isActive }) =>
 									`text-sm ${
 										isActive ? 'text-red-700' : 'text-white'
 									} font-medium px-2 py-2`
 								}
-								to="/contact"
+								to="#now"
 							>
-								Contact
+								Phim đang chiếu
 							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								className={({ isActive }) =>
-									`text-sm ${
-										isActive ? 'text-red-700' : 'text-white'
-									} font-medium px-2 py-2`
-								}
-								to="register"
-							>
-								Register
-							</NavLink>
-						</li>
+						</li> */}
 					</ul>
 					{Object.keys(user).length === 0 ? (
 						<button
@@ -191,7 +179,7 @@ const Header = () => {
 										Home
 									</NavLink>
 								</li>
-								<li className="mb-1 inline-flex group rounded w-full">
+								{/* <li className="mb-1 inline-flex group rounded w-full">
 									<div className="flex w-1 group-hover:bg-red-800 scale-y-0 group-hover:scale-100 transition-transform origin-top rounded-full duration-400 ease-in"></div>
 									<NavLink
 										className={({ isActive }) =>
@@ -201,10 +189,10 @@ const Header = () => {
 													: 'text-gray-500'
 											} group-hover:text-red-600`
 										}
-										to="/contact"
+										to="#now"
 										onClick={handleToggleOpen}
 									>
-										Contact
+										Phim đang chiếu
 									</NavLink>
 								</li>
 								<li className="mb-1 inline-flex group rounded w-full">
@@ -222,7 +210,7 @@ const Header = () => {
 									>
 										Register
 									</NavLink>
-								</li>
+								</li> */}
 							</ul>
 						</div>
 						<div className="mt-auto">
