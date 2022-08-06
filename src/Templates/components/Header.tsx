@@ -94,7 +94,7 @@ const Header = () => {
 							</NavLink>
 						</li> */}
 					</ul>
-					{Object.keys(user).length === 0 ? (
+					{!localStorage.getItem('access_token') ? (
 						<button
 							className="hidden lg:inline-block py-2 px-8 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold 
     transform active:scale-75 transition-transform duration-700 focus:outline-none"
@@ -215,7 +215,7 @@ const Header = () => {
 						</div>
 						<div className="mt-auto">
 							<div className="pt-6">
-								{Object.keys(user).length === 0 ? (
+								{!localStorage.getItem('access_token') ? (
 									<button
 										className="w-full py-3 px-4 bg-white hover:bg-red-600 text-sm text-center text-gray-800 hover:text-white font-bold  hover:shadow-md transform transition-transform duration-700 focus:outline-none"
 										onClick={handleLogin}
