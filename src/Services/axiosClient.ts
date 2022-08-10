@@ -12,6 +12,9 @@ const axiosClient = axios.create({
 				: ''
 		}`,
 	},
+	params: {
+		maNhom: 'GP09',
+	},
 });
 
 // Modify type
