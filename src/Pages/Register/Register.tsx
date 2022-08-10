@@ -1,5 +1,6 @@
 import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { motion } from 'framer-motion';
 import { object, string } from 'yup';
 import {
 	Button,
@@ -18,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'configStore';
 import { login } from 'Slices/auth';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Register fields: taiKhoan, matKhau, email, hoTen, soDt
 
@@ -57,6 +59,12 @@ const Register = () => {
 	const [response, setResponse] = useState<DangKiParams | null>(null);
 	const [error, setError] = useState('');
 	const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
+
+	const transitionVariants = {
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
+		exit: { opacity: 0 },
+	};
 
 	const form = useForm({
 		initialValues: {
@@ -134,7 +142,15 @@ const Register = () => {
 	};
 
 	return (
-		<div className="p-4 md:w-1/2 mx-auto">
+		<motion.div
+			className="p-4 md:w-1/2 mx-auto"
+			variants={transitionVariants}
+		>
+			<motion.div className="mb-4">
+				<Link to="/login" className="brightness-75">
+					{'<'} Đăng nhập
+				</Link>
+			</motion.div>
 			<Stepper active={active} breakpoint="sm">
 				<Stepper.Step label="Bước 1" description="Profile settings">
 					<TextInput
@@ -216,7 +232,7 @@ const Register = () => {
 					</Button>
 				)}
 			</Group>
-		</div>
+		</motion.div>
 	);
 };
 export default Register;

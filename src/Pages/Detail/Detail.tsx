@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import ReactPlayer from 'react-player/youtube';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 import Movie from 'Interface/movie';
 import movieAPI from 'Services/movieAPI';
@@ -20,6 +20,11 @@ import MuteButton from 'Components/MuteButton';
 import { Link } from 'react-router-dom';
 
 type Props = {};
+const animateStyles = {
+	initial: { opacity: 0 },
+	animate: { opacity: 1 },
+	exit: { opacity: 0 },
+};
 
 const Detail = (props: Props) => {
 	const { id } = useParams();
@@ -27,6 +32,11 @@ const Detail = (props: Props) => {
 	const [movie, setMovie] = useState<Movie>();
 	const playerRef = useRef<YouTubePlayer>(null);
 	const [isTrailerDone, setIsTrailerDone] = useState<boolean>(false);
+	const transitionVariants = {
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
+		exit: { opacity: 0 },
+	};
 
 	useEffect(() => {
 		async function fetchData() {
@@ -56,18 +66,22 @@ const Detail = (props: Props) => {
 					}) center/contain no-repeat
 					`,
 				}}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
+				variants={transitionVariants}
 			>
 				{!movie && (
-					<div className="w-full h-full">
+					<motion.div
+						className="w-full h-full"
+						variants={transitionVariants}
+					>
 						<Skeleton className="h-full" />
-					</div>
+					</motion.div>
 				)}
 
 				{movie && (
-					<div className="w-full h-full pointer-events-none">
+					<motion.div
+						className="w-full h-full pointer-events-none"
+						variants={transitionVariants}
+					>
 						{!isTrailerDone && (
 							<VideoPlayer
 								playerRef={playerRef}
@@ -76,7 +90,7 @@ const Detail = (props: Props) => {
 								setIsTrailerDone={setIsTrailerDone}
 							/>
 						)}
-					</div>
+					</motion.div>
 				)}
 
 				<div className="absolute right-3 bottom-3 md:right-5 md:bottom-5 lg:right-14 lg:bottom-14 z-10">
@@ -87,21 +101,26 @@ const Detail = (props: Props) => {
 					<CloseButton />
 				</div>
 			</motion.div>
-			<div className="p-4">
-				<h1>
+			<motion.div className="p-4" variants={transitionVariants}>
+				<motion.h1>
 					{movie ? movie?.tenPhim : <Skeleton className="w-3/5" />}
-				</h1>
-				<p>
+				</motion.h1>
+				<motion.p>
 					Ngày khởi chiếu:{' '}
 					{movie ? (
 						formatDate(movie?.ngayKhoiChieu)
 					) : (
 						<Skeleton className="w-2/5" />
 					)}
-				</p>
-				<p>Mô tả: {movie ? movie?.moTa : <Skeleton count={8} />}</p>
-			</div>
-			<div className="text-center mt-8 mb-12">
+				</motion.p>
+				<motion.p>
+					Mô tả: {movie ? movie?.moTa : <Skeleton count={8} />}
+				</motion.p>
+			</motion.div>
+			<motion.div
+				className="text-center mt-8 mb-12"
+				variants={transitionVariants}
+			>
 				<Button
 					component={Link}
 					to={`/reserve/${id}`}
@@ -111,7 +130,7 @@ const Detail = (props: Props) => {
 				>
 					Đặt vé
 				</Button>
-			</div>
+			</motion.div>
 		</>
 	);
 };
