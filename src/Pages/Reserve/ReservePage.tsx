@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { createStyles, Menu } from '@mantine/core';
+import { motion } from 'framer-motion';
+
 import { getMovieShowTimes } from 'Slices/cart';
 import { AppDispatch, RootState } from 'configStore';
 import { Settings } from 'tabler-icons-react';
@@ -19,7 +21,7 @@ const useStyles = createStyles((theme) => ({
 	// arrow: {
 	// 	fill: theme.colors.red[2],
 	// },
-	
+
 	item: {
 		backgroundColor: theme.colors.dark[7],
 		'&[data-hovered]': {
@@ -52,7 +54,12 @@ const ReservePage = (props: Props) => {
 	};
 
 	return (
-		<div className="p-4">
+		<motion.div
+			className="p-4"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<BackButton />
 			<br />
 			<h1>{movieShowTimes?.tenPhim}</h1>
@@ -111,7 +118,7 @@ const ReservePage = (props: Props) => {
 					sẽ được cập nhật trong thời gian tới.
 				</h4>
 			)}
-		</div>
+		</motion.div>
 	);
 };
 

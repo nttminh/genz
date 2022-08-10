@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import ReactPlayer from 'react-player/youtube';
+import { motion } from "framer-motion";
 
 import Movie from 'Interface/movie';
 import movieAPI from 'Services/movieAPI';
@@ -44,7 +45,7 @@ const Detail = (props: Props) => {
 
 	return (
 		<>
-			<div
+			<motion.div
 				className="relative h-44 md:h-72 lg:h-128 flex justify-center items-center"
 				style={{
 					backgroundSize: 'auto, cover',
@@ -55,6 +56,9 @@ const Detail = (props: Props) => {
 					}) center/contain no-repeat
 					`,
 				}}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
 			>
 				{!movie && (
 					<div className="w-full h-full">
@@ -82,7 +86,7 @@ const Detail = (props: Props) => {
 				<div className="absolute right-3 top-3 md:right-5 md:top-5 lg:right-14 lg:top-10">
 					<CloseButton />
 				</div>
-			</div>
+			</motion.div>
 			<div className="p-4">
 				<h1>
 					{movie ? movie?.tenPhim : <Skeleton className="w-3/5" />}

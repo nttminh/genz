@@ -1,6 +1,7 @@
 import { AppDispatch } from 'configStore';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
 import {
 	setHeThongRapChieu,
 	setLichDaChon,
@@ -24,7 +25,11 @@ const HomePage = (props: Props) => {
 	}, []);
 
 	return (
-		<div>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<Banner />
 			<h3 id="now" className="ml-5 font-bold">
 				Phim đang chiếu
@@ -35,7 +40,7 @@ const HomePage = (props: Props) => {
 				Hot tuần này
 			</h3>
 			<MovieShowing initialSlide={5} />
-		</div>
+		</motion.div>
 	);
 };
 

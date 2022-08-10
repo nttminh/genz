@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import HomeTemplate from './Templates/HomeTemplate';
 import HomePage from './Pages/HomePage/HomePage';
 import Contact from './Pages/Contact/Contact';
@@ -13,46 +13,14 @@ import ReservePage from 'Pages/Reserve/ReservePage';
 import ChooseTimePage from 'Pages/ChooseTime/ChooseTimePage';
 import SeatSelectPage from 'Pages/SeatSelect/SeatSelectPage';
 import Finish from 'Pages/Finish/Finish';
+import AnimatedRoutes from 'Components/AnimatedRoutes';
 
 function App(): React.ReactElement {
+const location = useLocation
+
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route path="" element={<HomeTemplate />}>
-					<Route path="contact" element={<Contact />} />
-					<Route path="login" element={<Login />} />
-					<Route path="register" element={<Register />} />
-					<Route path="about" element={<About />} />
-					<Route path="/:id" element={<Detail />} />
-					<Route
-						path="/reserve/:id/:maHeThongRap/:maCumRap"
-						element={<ChooseTimePage />}
-					/>
-					<Route
-						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu"
-						element={<SeatSelectPage />}
-					/>
-					<Route
-						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu/checkout"
-						element={
-							<ProtectedRoute>
-								<Checkout />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/reserve/:id/:maHeThongRap/:maCumRap/:maLichChieu/checkout/finish"
-						element={
-							<ProtectedRoute>
-								<Finish />
-							</ProtectedRoute>
-						}
-					/>
-					<Route path="reserve/:id" element={<ReservePage />} />
-					<Route index element={<HomePage />} />
-					<Route path="*" element={<Navigate to={''} />} />
-				</Route>
-			</Routes>
+			<AnimatedRoutes />
 		</BrowserRouter>
 	);
 }

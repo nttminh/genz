@@ -9,6 +9,7 @@ import {
 	Stepper,
 	TextInput,
 } from '@mantine/core';
+import { motion } from "framer-motion";
 import { useForm } from '@mantine/form';
 import { AppDispatch, RootState } from 'configStore';
 import { useEffect, useState } from 'react';

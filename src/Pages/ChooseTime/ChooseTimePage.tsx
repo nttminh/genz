@@ -1,4 +1,5 @@
 import { Button, Group, Image, Tabs, TabsValue } from '@mantine/core';
+import { motion } from 'framer-motion';
 import BackButton from 'Components/BackButton';
 import { AppDispatch, RootState } from 'configStore';
 import { formatDate } from 'Helpers/formatDate';
@@ -55,7 +56,12 @@ const ChooseTimePage = (props: Props) => {
 	}
 
 	return (
-		<div className="p-4">
+		<motion.div
+			className="p-4"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<BackButton />
 			<div className="my-2 flex flex-col md:flex-row justify-around">
 				<div className="w-1/2md:w-fit md:h-44">
@@ -133,7 +139,7 @@ const ChooseTimePage = (props: Props) => {
 						);
 					})}
 			</Tabs>
-		</div>
+		</motion.div>
 	);
 };
 

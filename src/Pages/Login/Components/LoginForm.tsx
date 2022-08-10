@@ -3,6 +3,7 @@ import { UseFormReturnType } from '@mantine/form';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AlertCircle } from 'tabler-icons-react';
+import { motion } from 'framer-motion';
 
 type Props = {
 	form: UseFormReturnType<{
@@ -21,7 +22,12 @@ const LoginForm = ({
 	error,
 }: Props) => {
 	return (
-		<div className="p-4 md:w-1/2 mx-auto">
+		<motion.div
+			className="p-4 md:w-1/2 mx-auto"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<TextInput
 				label="Tài khoản"
 				placeholder="Tài khoản"
@@ -62,7 +68,7 @@ const LoginForm = ({
 					{error}
 				</Alert>
 			)}
-		</div>
+		</motion.div>
 	);
 };
 

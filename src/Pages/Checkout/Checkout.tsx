@@ -1,4 +1,5 @@
 import { Button, Group, Image, Radio } from '@mantine/core';
+import { motion } from 'framer-motion';
 import BackButton from 'Components/BackButton';
 import { AppDispatch, RootState } from 'configStore';
 import { formatCurrency } from 'Helpers/formatCurrency';
@@ -71,7 +72,12 @@ const Checkout = () => {
 
 	const gioChieu = new Date(lichDaChon?.ngayChieuGioChieu!);
 	return (
-		<div className="p-4">
+		<motion.div
+			className="p-4"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<BackButton />
 			<h1>Thanh toán</h1>
 			<hr />
@@ -141,7 +147,7 @@ const Checkout = () => {
 					</div>
 				</div>
 			</Group>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -4,6 +4,8 @@ import { formatCurrency } from 'Helpers/formatCurrency';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
 import {
 	getMovieShowTimes,
 	setHeThongRapChieu,
@@ -54,7 +56,12 @@ const Finish = (props: Props) => {
 	}, [movieShowTimes, heThongRapChieu, rapDaChon, lichDaChon]);
 	const gioChieu = new Date(lichDaChon?.ngayChieuGioChieu!);
 	return (
-		<div className="p-4 text-center">
+		<motion.div
+			className="p-4 text-center"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<CircleCheck
 				size={72}
 				strokeWidth={2}
@@ -113,7 +120,7 @@ const Finish = (props: Props) => {
 					</div>
 				</div>
 			</Group>
-		</div>
+		</motion.div>
 	);
 };
 

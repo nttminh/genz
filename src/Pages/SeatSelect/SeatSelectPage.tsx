@@ -4,6 +4,8 @@ import { CumRapChieu, HeThongRapChieu } from 'Interface/movie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
 import movieAPI from 'Services/movieAPI';
 import { SeatAvailabilitiesResponse } from 'Interface/seats';
 import Skeleton from 'react-loading-skeleton';
@@ -85,7 +87,12 @@ const SeatSelectPage = (props: Props) => {
 	};
 
 	return (
-		<div className="p-4">
+		<motion.div
+			className="p-4"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<BackButton />
 			<h1>{movieShowTimes?.tenPhim}</h1>
 			<h3>{rapDaChon?.tenCumRap}</h3>
@@ -129,7 +136,7 @@ const SeatSelectPage = (props: Props) => {
 					Bạn chưa chọn ghế nào
 				</Alert>
 			)}
-		</div>
+		</motion.div>
 	);
 };
 

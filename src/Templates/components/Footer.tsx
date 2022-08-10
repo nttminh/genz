@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../logo2.svg';
+import { motion } from "framer-motion";
 
 type Props = {};
 
 const Footer = (props: Props) => {
 	return (
-		<footer className="p-4 rounded-lg shadow md:px-6 md:py-8">
+		<motion.footer
+			className="p-4 rounded-lg shadow md:px-6 md:py-8"
+			layout
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<div className=" sm:flex sm:items-center sm:justify-between">
 				<Link
 					to="/"
@@ -59,7 +66,7 @@ const Footer = (props: Props) => {
 				</Link>
 				. All Rights Reserved.
 			</span>
-		</footer>
+		</motion.footer>
 	);
 };
 

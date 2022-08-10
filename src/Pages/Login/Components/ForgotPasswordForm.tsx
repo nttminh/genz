@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, CircleCheck } from 'tabler-icons-react';
+import { motion } from 'framer-motion';
 
 type Props = {
 	setIsForgotPassword: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +34,12 @@ const ForgotPasswordForm = ({ setIsForgotPassword }: Props) => {
 	};
 
 	return (
-		<div className="p-4 ">
+		<motion.div
+			className="p-4"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			<Link
 				to="#"
 				className="brightness-75"
@@ -68,7 +74,7 @@ const ForgotPasswordForm = ({ setIsForgotPassword }: Props) => {
 					</Notification>
 				)}
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 
